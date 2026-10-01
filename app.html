@@ -205,7 +205,10 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
 .drill .lab { color: var(--pink-ink); }
 .drill .q { font-weight: 700; font-size: .92rem; }
 .drill .a { font-size: 1.35rem; font-weight: 800; }
-.drill .row { display: flex; gap: 6px; flex-wrap: wrap; }
+.drill .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.drill .try { display: flex; gap: 6px; }
+.drill .try input { flex: 1; min-width: 0; border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.85); border-radius: 12px; padding: 9px 12px; font: inherit; font-size: 1rem; }
+.drill .hint, .drill .mine { font-size: .84rem; color: var(--pink-ink); font-weight: 600; }
 .drill .mini { background: rgba(255,255,255,.75); }
 .followups { display: flex; gap: 6px; flex-wrap: wrap; }
 .followups .mini { background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
@@ -1348,8 +1351,19 @@ function drillBox(pr) {
   const d = document.createElement("div");
   d.className = "drill";
   d.innerHTML = `<span class="lab">Your turn</span><div class="q">${esc(pr.question)}</div>
-    <div class="row"><button class="btn small" data-a="show">Show answer</button></div>`;
+    <form class="try"><input type="text" placeholder="Your answer in Korean" aria-label="Your answer" autocomplete="off"><button class="btn small" type="submit">Check</button></form>
+    <div class="row">${pr.hint ? '<button class="mini" type="button" data-a="hint">Hint</button>' : ""}<button class="mini" type="button" data-a="show">Show answer</button></div>`;
+  $("form.try", d).onsubmit = e => {
+    e.preventDefault();
+    const v = $("input", d).value.trim();
+    if (!v || busy) return;
+    $("form.try", d).remove(); d.querySelector(".row").remove();
+    d.insertAdjacentHTML("beforeend", `<div class="mine">Your answer: ${esc(v)}</div>`);
+    askSend("My answer: " + v);
+  };
+  if (pr.hint) $('[data-a="hint"]', d).onclick = e => { e.target.replaceWith(Object.assign(document.createElement("span"), { className: "hint", textContent: "Hint: " + pr.hint })); };
   $('[data-a="show"]', d).onclick = () => {
+    $("form.try", d)?.remove();
     d.querySelector(".row").innerHTML = `<button class="mini" data-a="l">${ICON.speak} Listen</button><button class="mini" data-a="p">${ICON.mic} Practice</button>`;
     d.querySelector(".q").insertAdjacentHTML("afterend", `<div class="a">${esc(pr.answer)}</div>`);
     $('[data-a="l"]', d).onclick = () => speakKo(pr.answer);
@@ -1357,6 +1371,18 @@ function drillBox(pr) {
     speakKo(pr.answer);
   };
   return d;
+}
+
+// Remove any spoiler of the practice answer from the rest of the reply
+function hideAnswer(r) {
+  const ans = r.practice?.answer;
+  if (!ans) return;
+  const norm = s => String(s || "").replace(/[\s.,!?~]/g, "");
+  const a = norm(ans);
+  if (!a) return;
+  r.phrases = (r.phrases || []).filter(p => !norm(p.ko).includes(a) && !a.includes(norm(p.ko)) || norm(p.ko).length < 2);
+  const blank = s => typeof s === "string" && s.includes(ans.trim()) ? s.split(ans.trim()).join("____") : s;
+  r.message = blank(r.message); r.pattern = blank(r.pattern);
 }
 
 async function askSend(text) {
@@ -1371,6 +1397,7 @@ async function askSend(text) {
     const raw = await askAI({ kind: "ask", messages: askTurns.slice(-12) });
     const r = parseJSON(raw);
     askTurns.push({ role: "assistant", content: JSON.stringify(r) });
+    hideAnswer(r);
     li.innerHTML = minaWho() + `<div class="bubble">${esc(r.message)}</div>`;
     const list = document.createElement("div");
     list.className = "phrases";
