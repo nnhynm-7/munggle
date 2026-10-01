@@ -1,0 +1,14 @@
+{
+  "name": "ai-conversation-coach",
+  "version": "0.1.0",
+  "description": "AI 음성인식 기반 맞춤형 외국어 회화 학습 서비스 (MVP)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20.12"
+  }
+}

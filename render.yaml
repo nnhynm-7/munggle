@@ -1,0 +1,30 @@
+# Render(https://render.com) 배포 설정 — GitHub에 올린 뒤 "New > Blueprint"로 이 저장소를 선택하면 끝.
+# API 키는 여기 적지 말고, Render 화면에서 직접 입력한다(sync: false).
+services:
+  - type: web
+    name: munggle
+    runtime: node
+    plan: free
+    buildCommand: "true"
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      # 사람 같은 목소리(선택). 비워두면 브라우저 기본 음성을 쓴다.
+      - key: AZURE_SPEECH_KEY
+        sync: false
+      - key: AZURE_SPEECH_REGION
+        sync: false
+      - key: TRUST_PROXY
+        value: "1"
+      - key: RATE_PER_MINUTE
+        value: "20"
+      - key: DAILY_LIMIT
+        value: "300"
