@@ -1202,10 +1202,23 @@ $("#helloKo").onclick = () => speakKo("안녕! 나는 멍글이야");
 //  · 약과 = sugar/wax coating (왁뿌볼 ASMR): dense tiny crackles over a soft squish, like the reference clips
 let audio = null;
 function ac() {
+  // iPhone: "playback" keeps these sounds audible even when the silent switch is on (Safari 17+)
+  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch {}
   audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-  if (audio.state === "suspended") audio.resume();
+  if (audio.state !== "running") audio.resume().catch(() => {});
   return audio;
 }
+// Phones only allow sound to start on a finished tap (finger lifted), not on finger-down.
+// So the first tap/release anywhere switches the sound on and preloads 멍글이's clips.
+function unlockAudio() {
+  try {
+    const a = ac();
+    const s = a.createBufferSource(); s.buffer = a.createBuffer(1, 1, 22050); s.connect(a.destination); s.start(0);
+    loadMunggliClip(a);
+    if (a.state === "running") ["pointerup", "touchend", "click", "keydown"].forEach(ev => document.removeEventListener(ev, unlockAudio, true));
+  } catch {}
+}
+["pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, unlockAudio, true));
 function noiseBuf(a, sec) {
   const len = Math.max(1, Math.floor(a.sampleRate * sec)), b = a.createBuffer(1, len, a.sampleRate), d = b.getChannelData(0);
   for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
@@ -1260,9 +1273,11 @@ function playMunggliClip(a) {
   g.gain.value = 0.9;
   s.connect(g).connect(a.destination); s.start();
 }
-function asmr(kind) {
+function asmr(kind, retry) {
   try {
     const a = ac();
+    // Sound not switched on yet (first press on a phone): play as soon as the finger lifts and it turns on
+    if (a.state !== "running") { if (!retry) a.resume().then(() => asmr(kind, true)).catch(() => {}); return; }
     if (kind === "squish" || kind === "release") {
       if (!minaClip) loadMunggliClip(a)?.then(b => { if (b && kind === "squish") playMunggliClip(a); });
       if (minaClip) { if (kind === "squish") playMunggliClip(a); return; }   // release stays quiet: one clean squelch per press
