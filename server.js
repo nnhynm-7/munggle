@@ -267,6 +267,8 @@ const server = http.createServer(async (req, res) => {
       return await sendFile(res, "shared.js", "text/javascript; charset=utf-8");
     if (req.method === "GET" && url.pathname === "/sounds.js")
       return await sendFile(res, "sounds.js", "text/javascript; charset=utf-8");
+    if (req.method === "GET" && url.pathname === "/i18n.js")
+      return await sendFile(res, "i18n.js", "text/javascript; charset=utf-8");
   } catch (err) {
     console.error(err);
     res.writeHead(500); return res.end("Server error");

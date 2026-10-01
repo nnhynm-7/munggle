@@ -376,14 +376,14 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
       <h1 class="vh">Munggle — learn Korean for your trip</h1>
       <div class="home">
         <button class="today" id="todayCard" aria-label="Today's phrase, tap to listen">
-          <span class="tag">Today's phrase</span>
+          <span class="tag" data-i18n="Today's phrase">Today's phrase</span>
           <span class="txt"><span class="k" id="todayKo"></span><span class="m" id="todayMeaning"></span></span>
           <svg class="icon" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
         </button>
         <span class="vh" id="todayRom"></span>
         <div class="hello">
           <button class="hello-ko" id="helloKo" aria-label="안녕! 나는 멍글이야. Tap to listen">안녕! 나는 멍글이야</button>
-          <p class="hello-en">Hi, I'm Munggli, your Korean buddy.</p>
+          <p class="hello-en" data-i18n="Hi, I'm Munggli, your Korean buddy.">Hi, I'm Munggli, your Korean buddy.</p>
         </div>
         <div class="stage">
           <div class="say-bubble" id="mochiSay" aria-live="polite"></div>
@@ -583,19 +583,19 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
     <!-- ============ ASK MINA (Korean tutor) ============ -->
     <section class="panel" id="panel-ask" hidden>
       <div class="ask-bar" id="askBar" hidden>
-        <button class="back" id="askBack"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>All topics</button>
+        <button class="back" id="askBack"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-i18n="All topics">All topics</span></button>
       </div>
       <div id="askIntro">
         <div class="pad">
           <div class="intro-head">
             <span class="face" id="askFace"></span>
             <div>
-              <h2>Ask Munggli</h2>
-              <p>Your Korean tutor. Ask how to say something, what a word means, or let her quiz you.</p>
+              <h2 data-i18n="Ask Munggli">Ask Munggli</h2>
+              <p data-i18n="Your Korean tutor. Ask how to say something, what a word means, or let Munggli quiz you.">Your Korean tutor. Ask how to say something, what a word means, or let Munggli quiz you.</p>
             </div>
           </div>
         </div>
-        <div class="starter-label lab"><i class="sq"></i>Start with</div>
+        <div class="starter-label lab"><i class="sq"></i><span data-i18n="Start with">Start with</span></div>
         <div class="starters" id="starters"></div>
       </div>
       <ol class="thread" id="askThread" aria-live="polite"></ol>
@@ -607,8 +607,8 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
         <div class="pad">
           <div class="section-head">
             <div>
-              <h2>Situations</h2>
-              <p>Munggli plays the staff. Answer in Korean, use the hints if you get stuck, and get a report at the end.</p>
+              <h2 data-i18n="Situations">Situations</h2>
+              <p data-i18n="Munggli plays the staff. Answer in Korean, use the hints if you get stuck, and get a report at the end.">Munggli plays the staff. Answer in Korean, use the hints if you get stuck, and get a report at the end.</p>
             </div>
           </div>
         </div>
@@ -616,12 +616,12 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
       </div>
       <div id="simRun" hidden>
         <div class="sim-bar">
-          <button class="back" id="simBack"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>All situations</button>
+          <button class="back" id="simBack"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-i18n="All situations">All situations</span></button>
           <div class="title"><span class="badge" id="simBadge"></span><div><b id="simTitle"></b><small id="simGoal"></small></div></div>
           <div class="actions">
-            <button class="mini" id="hintToggle" aria-pressed="true">Hints on</button>
-            <button class="mini" id="autoToggle" aria-pressed="false" title="Start listening automatically after Munggli speaks">Hands-free off</button>
-            <button class="btn small" id="endSim">Finish &amp; get report</button>
+            <button class="mini" id="hintToggle" aria-pressed="true" data-i18n="Hints on">Hints on</button>
+            <button class="mini" id="autoToggle" aria-pressed="false" title="Start listening automatically after Munggli speaks" data-i18n="Hands-free off">Hands-free off</button>
+            <button class="btn small" id="endSim" data-i18n="Finish &amp; get report">Finish &amp; get report</button>
           </div>
         </div>
         <ol class="thread" id="simThread" aria-live="polite"></ol>
@@ -634,10 +634,10 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
       <div class="pad">
         <div class="section-head">
           <div>
-            <h2>My Phrases</h2>
-            <p>Everything you saved. Review with flashcards and practise out loud.</p>
+            <h2 data-i18n="My Phrases">My Phrases</h2>
+            <p data-i18n="Everything you saved. Review with flashcards and practise out loud.">Everything you saved. Review with flashcards and practise out loud.</p>
           </div>
-          <button class="btn small" id="flashBtn">Flashcards</button>
+          <button class="btn small" id="flashBtn" data-i18n="Flashcards">Flashcards</button>
         </div>
       </div>
       <div id="flashArea"></div>
@@ -649,7 +649,7 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
   <div class="composer" id="composer" hidden>
     <div class="composer-inner">
       <div id="suggestWrap" hidden>
-        <div class="lab" style="margin-bottom:4px">You could say</div>
+        <div class="lab" style="margin-bottom:4px" data-i18n="You could say">You could say</div>
         <div class="suggest" id="suggest"></div>
       </div>
       <div class="composer-row">
@@ -665,7 +665,7 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
       </div>
       <div class="composer-meta">
         <span id="micLangWrap" class="seg" role="group" aria-label="Microphone language">
-          <button type="button" data-mic="native" aria-pressed="true">My language</button>
+          <button type="button" data-mic="native" aria-pressed="true" data-i18n="My language">My language</button>
           <button type="button" data-mic="ko" aria-pressed="false">한국어</button>
         </span>
         <span id="interim" class="interim"></span>
@@ -677,44 +677,45 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
   <!-- floating tab bar -->
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-tab="home" aria-selected="true">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg>Home</button>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span data-i18n="Home">Home</span></button>
     <button class="tab" role="tab" data-tab="ask" aria-selected="false">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>Ask Munggli</button>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg><span data-i18n="Ask Munggli">Ask Munggli</span></button>
     <button class="tab" role="tab" data-tab="sim" aria-selected="false">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M4 18V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v11"/><path d="M4 14h16M8 18l-2 3M16 18l2 3"/><circle cx="8" cy="10" r="1"/><circle cx="16" cy="10" r="1"/></svg>Situations</button>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 18V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v11"/><path d="M4 14h16M8 18l-2 3M16 18l2 3"/><circle cx="8" cy="10" r="1"/><circle cx="16" cy="10" r="1"/></svg><span data-i18n="Situations">Situations</span></button>
     <button class="tab" role="tab" data-tab="book" aria-selected="false">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"/></svg>Phrases<span class="count" id="bookCount">0</span></button>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"/></svg><span data-i18n="Phrases">Phrases</span><span class="count" id="bookCount">0</span></button>
   </nav>
 
   <!-- settings sheet -->
   <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
     <div class="sheet-card">
       <div class="sheet-head">
-        <h2 id="sheetTitle">Settings</h2>
+        <h2 id="sheetTitle" data-i18n="Settings">Settings</h2>
         <button class="x" id="sheetClose" aria-label="Close settings"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
       </div>
       <label class="field">
-        <span class="lab">Your language</span>
+        <span class="lab" data-i18n="Your language">Your language</span>
         <select id="prefLang"></select>
       </label>
       <div class="field">
-        <span class="lab" id="levelLab">Your Korean level</span>
+        <span class="lab" id="levelLab" data-i18n="Your Korean level">Your Korean level</span>
         <input class="slider" type="range" id="prefLevel" min="0" max="2" step="1" aria-labelledby="levelLab">
-        <div class="ticks" id="levelTicks"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div>
+        <div class="ticks" id="levelTicks"><span data-i18n="Beginner">Beginner</span><span data-i18n="Intermediate">Intermediate</span><span data-i18n="Advanced">Advanced</span></div>
       </div>
       <div class="field">
-        <span class="lab" id="voiceLab">Voice</span>
+        <span class="lab" id="voiceLab" data-i18n="Voice">Voice</span>
         <span class="seg voice-seg" id="voiceSeg" role="group" aria-labelledby="voiceLab">
-          <button type="button" data-voice="female" aria-pressed="true">Female</button>
-          <button type="button" data-voice="male" aria-pressed="false">Male</button>
+          <button type="button" data-voice="female" aria-pressed="true" data-i18n="Female">Female</button>
+          <button type="button" data-voice="male" aria-pressed="false" data-i18n="Male">Male</button>
         </span>
         <small id="voiceNote"></small>
       </div>
-      <div class="sheet-foot"><button class="btn" id="sheetDone">Done</button></div>
+      <div class="sheet-foot"><button class="btn" id="sheetDone" data-i18n="Done">Done</button></div>
     </div>
   </div>
 </div>
 
+<script src="i18n.js"></script>
 <script src="shared.js"></script>
 <script src="sounds.js"></script>
 <script>
@@ -749,6 +750,17 @@ if (prefs.voice !== "male") prefs.voice = "female";
 if (!LANGS[prefs.lang]) prefs.lang = "en";
 if (!LEVELS[prefs.level]) prefs.level = "zero";
 
+/* ---------------- screen language ---------------- */
+// English is the source text; public/i18n.js has the other languages. Missing → English.
+const I18N = window.MUNGGLE_I18N || {};
+const tr = s => (s && (I18N[prefs.lang] || {})[s]) || s;
+function setT(el, key) { el.dataset.i18n = key; el.textContent = tr(key); }
+function applyLang() {
+  document.documentElement.lang = { zh: "zh-CN", zht: "zh-TW" }[prefs.lang] || prefs.lang;
+  $$("[data-i18n]").forEach(el => { el.textContent = tr(el.dataset.i18n); });
+}
+applyLang();
+
 $("#prefLang").innerHTML = Object.entries(LANGS).map(([k, l]) => `<option value="${k}">${esc(l.label)}</option>`).join("");
 function renderPrefs() {
   $("#prefLang").value = prefs.lang;
@@ -756,18 +768,20 @@ function renderPrefs() {
   $("#prefLevel").value = i;
   $("#prefLevel").setAttribute("aria-valuetext", LEVELS[prefs.level].short);
   $$("#levelTicks span").forEach((s, j) => s.classList.toggle("on", j === i));
-  $("#setBtn").title = `${LANGS[prefs.lang].label} · ${LEVELS[prefs.level].short}`;
+  $("#setBtn").title = `${LANGS[prefs.lang].label} · ${tr(LEVELS[prefs.level].short)}`;
   $$("#voiceSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.voice === prefs.voice));
   const note = $("#voiceNote");
   let serverVoice = false; try { serverVoice = AI.tts; } catch {}   // AI is set up later on first load
   if (note) note.textContent = prefs.voice === "male" && !serverVoice && !hasMaleBrowserVoice()
-    ? "This browser has no male Korean voice. Open the site in Microsoft Edge for a male voice."
+    ? tr("This browser has no male Korean voice. Open the site in Microsoft Edge for a male voice.")
     : "";
 }
-let shownLevel = prefs.level;
+let shownLevel = prefs.level, shownLang = prefs.lang;
 function savePrefs() {
   store.set("malhae.prefs", prefs); renderPrefs();
-  if (prefs.level !== shownLevel) { shownLevel = prefs.level; renderToday(); renderStarters(); }
+  const langChanged = prefs.lang !== shownLang;
+  if (langChanged) { shownLang = prefs.lang; applyLang(); renderSims(); syncComposer(); }
+  if (langChanged || prefs.level !== shownLevel) { shownLevel = prefs.level; renderToday(); renderStarters(); }
 }
 $("#prefLang").onchange = e => { prefs.lang = e.target.value; savePrefs(); };
 $("#prefLevel").oninput = e => { prefs.level = LEVEL_KEYS[+e.target.value] || "zero"; savePrefs(); };
@@ -815,7 +829,7 @@ async function detectAI() {
   } catch { AI.mode = "mock"; }
   if (AI.mode === "mock") showNotice("Demo mode: no AI key found, so you'll see sample answers. Add a key in .env to get real replies.");
 }
-function showNotice(t) { const n = $("#notice"); n.textContent = t; n.hidden = false; }
+function showNotice(t) { const n = $("#notice"); setT(n, t); n.hidden = false; }
 
 // kind: "ask" | "sim" | "report"; messages: [{role:'user'|'assistant', content}]
 // The prompt is built from shared.js — on the server in server mode, so the browser never sends it.
@@ -825,7 +839,7 @@ async function askAI({ kind, simId, messages, tier = "default" }) {
   if (AI.mode === "server") {
     const res = await fetch("/api/llm", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...req, messages }) });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || "The AI didn't answer. Try again.");
+    if (!res.ok) throw new Error(tr(data.error || "The AI didn't answer. Try again."));
     return data.text;
   }
   // artifact runtime: no system prompt, so the rules become the first user turn
@@ -844,12 +858,12 @@ async function askAI({ kind, simId, messages, tier = "default" }) {
     return text;
   } catch (e) {
     const msg = { not_granted: "AI access was declined for this page.", rate_limited: "Too many requests. Wait a moment and try again." }[e.code];
-    throw new Error(msg || "The AI didn't answer. Try again.");
+    throw new Error(tr(msg || "The AI didn't answer. Try again."));
   }
 }
 function parseJSON(text) {
   const m = String(text).match(/\{[\s\S]*\}/);
-  if (!m) throw new Error("Got an unexpected answer. Try again.");
+  if (!m) throw new Error(tr("Got an unexpected answer. Try again."));
   return JSON.parse(m[0]);
 }
 
@@ -966,12 +980,12 @@ function listen({ lang, onInterim, onFinal, onEnd, onError }) {
     }
     onInterim && onInterim(final + interim);
   };
-  r.onerror = e => onError && onError({
+  r.onerror = e => onError && onError(tr({
     "not-allowed": "Allow microphone access in your browser's address bar, then try again.",
     "no-speech": "I didn't hear anything. Tap the mic and speak again.",
     network: "Speech recognition needs an internet connection.",
     "audio-capture": "No microphone found.",
-  }[e.error] || "");
+  }[e.error] || ""));
   r.onend = () => { rec = null; onEnd && onEnd(); if (final.trim()) onFinal && onFinal(final.trim()); };
   rec = r;
   try { r.start(); } catch {}
@@ -1004,10 +1018,10 @@ function openPractice(card, ko) {
   box = document.createElement("div");
   box.className = "practice";
   if (!voiceOK) {
-    box.innerHTML = `<span class="status">${inArtifact ? "Pronunciation practice needs the microphone, which isn't available on this page. Tap Listen or Slow and repeat after it." : "Your browser doesn't support speech recognition. Use Chrome or Edge."}</span>`;
+    box.innerHTML = `<span class="status">${tr(inArtifact ? "Pronunciation practice needs the microphone, which isn't available on this page. Tap Listen or Slow and repeat after it." : "Your browser doesn't support speech recognition. Use Chrome or Edge.")}</span>`;
     card.appendChild(box); return;
   }
-  box.innerHTML = `<span class="status">Listening… say: <b class="ko">${esc(ko)}</b></span><span class="heard"></span>`;
+  box.innerHTML = `<span class="status">${tr("Listening… say:")} <b class="ko">${esc(ko)}</b></span><span class="heard"></span>`;
   card.appendChild(box);
   const status = $(".status", box), heard = $(".heard", box);
   listen({
@@ -1017,13 +1031,13 @@ function openPractice(card, ko) {
     onFinal: t => {
       const { score, marks, chars } = pronScore(ko, t);
       const cls = score >= 85 ? "good" : score >= 60 ? "mid" : "low";
-      const label = score >= 85 ? "Sounds great!" : score >= 60 ? "Almost there" : "Try once more";
+      const label = tr(score >= 85 ? "Sounds great!" : score >= 60 ? "Almost there" : "Try once more");
       status.innerHTML = `<span class="score-pill ${cls}">${score}% · ${label}</span>`;
-      heard.innerHTML = `<span class="src">I heard:</span> ${esc(t)}<div class="diff">${chars.map((c, i) => `<span class="${marks[i] ? "ok" : "miss"}">${c}</span>`).join("")}</div>`;
+      heard.innerHTML = `<span class="src">${tr("I heard:")}</span> ${esc(t)}<div class="diff">${chars.map((c, i) => `<span class="${marks[i] ? "ok" : "miss"}">${c}</span>`).join("")}</div>`;
       const again = document.createElement("div");
       again.className = "row";
       again.style.cssText = "display:flex;gap:6px;flex-wrap:wrap";
-      again.innerHTML = `<button class="mini save" data-a="why">${ICON.spark} ${score >= 100 ? "How to sound native" : "Why? Ask Munggli"}</button><button class="mini" data-a="slow">${ICON.speak} Listen slowly</button><button class="mini" data-a="retry">${ICON.mic} Try again</button>`;
+      again.innerHTML = `<button class="mini save" data-a="why">${ICON.spark} ${tr(score >= 100 ? "How to sound native" : "Why? Ask Munggli")}</button><button class="mini" data-a="slow">${ICON.speak} ${tr("Listen slowly")}</button><button class="mini" data-a="retry">${ICON.mic} ${tr("Try again")}</button>`;
       box.appendChild(again);
       $('[data-a="why"]', again).onclick = e => { e.currentTarget.disabled = true; pronCoach(box, ko, t); };
       $('[data-a="slow"]', again).onclick = () => speakKo(ko, { slow: true });
@@ -1042,7 +1056,7 @@ async function pronCoach(box, ko, heard) {
     const r = parseJSON(await askAI({ kind: "pron", messages: [{ role: "user", content: `TARGET: ${ko}\nHEARD: ${heard}` }], tier: "quick" }));
     c.innerHTML = `<div class="v">${esc(r.verdict || "")}</div>
       ${(r.tips || []).map(tp => `<div class="tip"><b>${esc(tp.sound || "")}</b><span>${esc(tp.issue || "")}</span><span class="how">${esc(tp.how || "")}</span></div>`).join("")}
-      ${r.try ? `<div><span class="lab">Say it in chunks</span><div class="try">${esc(r.try)}</div></div>` : ""}`;
+      ${r.try ? `<div><span class="lab">${tr("Say it in chunks")}</span><div class="try">${esc(r.try)}</div></div>` : ""}`;
   } catch (e) { c.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
 
@@ -1070,16 +1084,16 @@ function phraseCard(p, src) {
     ${parts.length ? `<div class="parts">${parts.map(b => `<span class="part"><b>${esc(b.part)}</b><span>${esc(b.meaning || "")}</span></span>`).join("")}</div>` : ""}
     ${p.note ? `<div class="n">${esc(p.note)}</div>` : ""}
     <div class="row">
-      <button class="mini" data-a="listen">${ICON.speak} Listen</button>
-      <button class="mini" data-a="slow">${ICON.speak} Slow</button>
-      <button class="mini" data-a="practice">${ICON.mic} Practice</button>
-      <button class="mini ${inBook(p.ko) ? "on" : "save"}" data-a="save">${inBook(p.ko) ? ICON.check + " Saved" : ICON.save + " Save"}</button>
+      <button class="mini" data-a="listen">${ICON.speak} ${tr("Listen")}</button>
+      <button class="mini" data-a="slow">${ICON.speak} ${tr("Slow")}</button>
+      <button class="mini" data-a="practice">${ICON.mic} ${tr("Practice")}</button>
+      <button class="mini ${inBook(p.ko) ? "on" : "save"}" data-a="save">${inBook(p.ko) ? ICON.check + " " + tr("Saved") : ICON.save + " " + tr("Save")}</button>
     </div>`;
   $('[data-a="listen"]', el).onclick = () => speakKo(p.ko);
   $('[data-a="slow"]', el).onclick = () => speakKo(p.ko, { slow: true });
   $('[data-a="practice"]', el).onclick = () => openPractice(el, p.ko);
   const sv = $('[data-a="save"]', el);
-  sv.onclick = () => { addToBook(p, src); sv.classList.remove("save"); sv.classList.add("on"); sv.innerHTML = ICON.check + " Saved"; };
+  sv.onclick = () => { addToBook(p, src); sv.classList.remove("save"); sv.classList.add("on"); sv.innerHTML = ICON.check + " " + tr("Saved"); };
   return el;
 }
 
@@ -1112,7 +1126,7 @@ function syncComposer() {
   $("#composer").hidden = !show;
   $("#micLangWrap").hidden = tab !== "ask" || !voiceOK;
   $("#suggestWrap").hidden = !(simActive && $("#suggest").children.length);
-  $("#input").placeholder = tab === "ask" ? "Ask Munggli anything about Korean" : "Reply in Korean (or tap a hint)";
+  $("#input").placeholder = tr(tab === "ask" ? "Ask Munggli anything about Korean" : "Reply in Korean (or tap a hint)");
   $("#micBtn").hidden = !voiceOK;
   const meta = $(".composer-meta");
   meta.hidden = $("#micLangWrap").hidden && !$("#status").textContent && !$("#interim").textContent;
@@ -1139,12 +1153,12 @@ $("#micBtn").onclick = () => {
 function startMic() {
   const lang = tab === "sim" || micLang === "ko" ? "ko-KR" : LANGS[prefs.lang].stt;
   $("#micBtn").classList.add("rec");
-  setStatus("Listening…");
+  setStatus(tr("Listening…"));
   listen({
     lang,
     onInterim: t => $("#interim").textContent = t,
     onError: m => m && setStatus(m, true),
-    onEnd: () => { $("#micBtn").classList.remove("rec"); $("#interim").textContent = ""; if ($("#status").textContent === "Listening…") setStatus(""); },
+    onEnd: () => { $("#micBtn").classList.remove("rec"); $("#interim").textContent = ""; if ($("#status").textContent === tr("Listening…")) setStatus(""); },
     onFinal: t => submitText(t),
   });
 }
@@ -1177,7 +1191,7 @@ function renderToday() {
   const today = list[Math.floor(Date.now() / 864e5) % list.length];
   $("#todayKo").textContent = today.ko;
   $("#todayRom").textContent = today.rom;
-  $("#todayMeaning").textContent = today.meaning;
+  $("#todayMeaning").textContent = tr(today.meaning);
   $("#todayCard").onclick = () => speakKo(today.ko);
 }
 renderToday();
@@ -1332,8 +1346,8 @@ function renderStarters() {
   (STARTERS_BY_LEVEL[prefs.level] || STARTERS_BY_LEVEL.some).forEach(s => {
     const b = document.createElement("button");
     b.className = "starter";
-    b.innerHTML = `<span class="lab">${esc(s.s)}</span><span>${esc(s.t)}</span>`;
-    b.onclick = () => askSend(s.t);
+    b.innerHTML = `<span class="lab">${esc(tr(s.s))}</span><span>${esc(tr(s.t))}</span>`;
+    b.onclick = () => askSend(tr(s.t));
     $("#starters").appendChild(b);
   });
 }
@@ -1350,21 +1364,21 @@ $("#askBack").onclick = () => {
 function drillBox(pr) {
   const d = document.createElement("div");
   d.className = "drill";
-  d.innerHTML = `<span class="lab">Your turn</span><div class="q">${esc(pr.question)}</div>
-    <form class="try"><input type="text" placeholder="Your answer in Korean" aria-label="Your answer" autocomplete="off"><button class="btn small" type="submit">Check</button></form>
-    <div class="row">${pr.hint ? '<button class="mini" type="button" data-a="hint">Hint</button>' : ""}<button class="mini" type="button" data-a="show">Show answer</button></div>`;
+  d.innerHTML = `<span class="lab">${tr("Your turn")}</span><div class="q">${esc(pr.question)}</div>
+    <form class="try"><input type="text" placeholder="${esc(tr("Your answer in Korean"))}" aria-label="${esc(tr("Your answer in Korean"))}" autocomplete="off"><button class="btn small" type="submit">${tr("Check")}</button></form>
+    <div class="row">${pr.hint ? '<button class="mini" type="button" data-a="hint">' + tr("Hint") + '</button>' : ""}<button class="mini" type="button" data-a="show">${tr("Show answer")}</button></div>`;
   $("form.try", d).onsubmit = e => {
     e.preventDefault();
     const v = $("input", d).value.trim();
     if (!v || busy) return;
     $("form.try", d).remove(); d.querySelector(".row").remove();
-    d.insertAdjacentHTML("beforeend", `<div class="mine">Your answer: ${esc(v)}</div>`);
-    askSend("My answer: " + v);
+    d.insertAdjacentHTML("beforeend", `<div class="mine">${tr("My answer:")} ${esc(v)}</div>`);
+    askSend(tr("My answer:") + " " + v);
   };
-  if (pr.hint) $('[data-a="hint"]', d).onclick = e => { e.target.replaceWith(Object.assign(document.createElement("span"), { className: "hint", textContent: "Hint: " + pr.hint })); };
+  if (pr.hint) $('[data-a="hint"]', d).onclick = e => { e.target.replaceWith(Object.assign(document.createElement("span"), { className: "hint", textContent: tr("Hint:") + " " + pr.hint })); };
   $('[data-a="show"]', d).onclick = () => {
     $("form.try", d)?.remove();
-    d.querySelector(".row").innerHTML = `<button class="mini" data-a="l">${ICON.speak} Listen</button><button class="mini" data-a="p">${ICON.mic} Practice</button>`;
+    d.querySelector(".row").innerHTML = `<button class="mini" data-a="l">${ICON.speak} ${tr("Listen")}</button><button class="mini" data-a="p">${ICON.mic} ${tr("Practice")}</button>`;
     d.querySelector(".q").insertAdjacentHTML("afterend", `<div class="a">${esc(pr.answer)}</div>`);
     $('[data-a="l"]', d).onclick = () => speakKo(pr.answer);
     $('[data-a="p"]', d).onclick = () => openPractice(d, pr.answer);
@@ -1403,7 +1417,7 @@ async function askSend(text) {
     list.className = "phrases";
     (r.phrases || []).forEach(p => list.appendChild(phraseCard(p, "Ask Munggli")));
     li.appendChild(list);
-    if (r.pattern) li.insertAdjacentHTML("beforeend", `<div class="tipbox"><span class="lab">Pattern</span><span>${esc(r.pattern)}</span></div>`);
+    if (r.pattern) li.insertAdjacentHTML("beforeend", `<div class="tipbox"><span class="lab">${tr("Pattern")}</span><span>${esc(r.pattern)}</span></div>`);
     if (r.practice?.question && r.practice?.answer) li.appendChild(drillBox(r.practice));
     if (r.follow_up?.length) {
       const f = document.createElement("div");
@@ -1425,19 +1439,23 @@ async function askSend(text) {
 const sim = { cur: null, turns: [], log: [], hints: true, auto: false, done: false };
 const lineColor = n => `var(--l${n})`;
 
-SIMS.forEach(s => {
-  const b = document.createElement("button");
-  b.className = "simrow";
-  b.innerHTML = `<span class="badge" style="background:var(--p${s.line});color:var(--t${s.line})">${s.line}</span>
-    <span class="t"><b>${esc(s.en)}</b><span class="ko">${esc(s.ko)}</span></span>${ICON.arrow}`;
-  b.onclick = () => startSim(s);
-  $("#simList").appendChild(b);
-});
+function renderSims() {
+  $("#simList").innerHTML = "";
+  SIMS.forEach(s => {
+    const b = document.createElement("button");
+    b.className = "simrow";
+    b.innerHTML = `<span class="badge" style="background:var(--p${s.line});color:var(--t${s.line})">${s.line}</span>
+      <span class="t"><b>${esc(tr(s.en))}</b><span class="ko">${esc(s.ko)}</span></span>${ICON.arrow}`;
+    b.onclick = () => startSim(s);
+    $("#simList").appendChild(b);
+  });
+}
+renderSims();
 
 function staffHTML(r) {
-  return minaWho(sim.cur.staff) + `
+  return minaWho(tr(sim.cur.staff)) + `
   <div class="bubble staff"><div class="k">${esc(r.ko)}</div><div class="r">${esc(r.rom || "")}</div><div class="m">${esc(r.meaning || "")}</div>
-  <div class="row"><button class="mini" data-a="again">${ICON.speak} Again</button><button class="mini" data-a="slow">${ICON.speak} Slow</button></div></div>`;
+  <div class="row"><button class="mini" data-a="again">${ICON.speak} ${tr("Again")}</button><button class="mini" data-a="slow">${ICON.speak} ${tr("Slow")}</button></div></div>`;
 }
 function bindStaff(li, r) {
   $('[data-a="again"]', li).onclick = () => speakKo(r.ko);
@@ -1454,7 +1472,7 @@ function staffSays(r) {
   speakKo(r.ko, { onend: () => { if (sim.auto && !sim.done && tab === "sim" && !busy) startMic(); } });
   if (r.done) {
     sim.done = true;
-    const d = addTurn($("#simThread"), "ai", `<div class="done-banner"><span>Goal complete. Nicely done!</span><button class="btn small">See my report</button></div>`);
+    const d = addTurn($("#simThread"), "ai", `<div class="done-banner"><span>${tr("Goal complete. Nicely done!")}</span><button class="btn small">${tr("See my report")}</button></div>`);
     $("button", d).onclick = finishSim;
   }
 }
@@ -1477,12 +1495,12 @@ function startSim(s) {
   Object.assign(sim, { cur: s, turns: [], log: [], done: false });
   $("#simThread").innerHTML = "";
   $("#simBadge").textContent = s.line; $("#simBadge").style.background = `var(--p${s.line})`; $("#simBadge").style.color = `var(--t${s.line})`;
-  $("#simTitle").textContent = s.en;
-  $("#simGoal").textContent = `${s.ko} · Goal: ${s.goal}`;
+  $("#simTitle").textContent = tr(s.en);
+  $("#simGoal").textContent = `${s.ko} · ${tr("Goal:")} ${tr(s.goal)}`;
   $("#simPick").hidden = true; $("#simReport").hidden = true; $("#simRun").hidden = false;
   syncComposer();
   window.scrollTo(0, 0);
-  staffSays({ ...s.open, suggestions: s.sug, done: false });
+  staffSays({ ...s.open, meaning: tr(s.open.meaning), suggestions: s.sug.map(x => ({ ...x, meaning: tr(x.meaning) })), done: false });
 }
 
 function backToList() {
@@ -1516,13 +1534,13 @@ $("#hintToggle").onclick = e => {
   sim.hints = !sim.hints;
   $("#panel-sim").classList.toggle("hide-hints", !sim.hints);
   $("#composer").classList.toggle("hide-hints", !sim.hints);
-  e.currentTarget.textContent = sim.hints ? "Hints on" : "Hints off";
+  setT(e.currentTarget, sim.hints ? "Hints on" : "Hints off");
   e.currentTarget.setAttribute("aria-pressed", sim.hints);
 };
 $("#autoToggle").onclick = e => {
-  if (!voiceOK) { setStatus("Hands-free needs the microphone (full app in Chrome or Edge).", true); return; }
+  if (!voiceOK) { setStatus(tr("Hands-free needs the microphone (full app in Chrome or Edge)."), true); return; }
   sim.auto = !sim.auto;
-  e.currentTarget.textContent = sim.auto ? "Hands-free on" : "Hands-free off";
+  setT(e.currentTarget, sim.auto ? "Hands-free on" : "Hands-free off");
   e.currentTarget.classList.toggle("on", sim.auto);
   e.currentTarget.setAttribute("aria-pressed", sim.auto);
 };
@@ -1530,7 +1548,7 @@ $("#endSim").onclick = finishSim;
 
 async function finishSim() {
   stopListening(); stopSpeech();
-  if (!sim.log.some(l => l.who === "LEARNER")) { setStatus("Say at least one line before finishing.", true); return; }
+  if (!sim.log.some(l => l.who === "LEARNER")) { setStatus(tr("Say at least one line before finishing."), true); return; }
   $("#simRun").hidden = true; syncComposer();
   const box = $("#simReport");
   box.hidden = false;
@@ -1540,40 +1558,40 @@ async function finishSim() {
     const r = parseJSON(await askAI({ kind: "report", simId: sim.cur.id, messages: [{ role: "user", content: "Transcript:\n" + transcript }] }));
     renderReport(r);
   } catch (e) {
-    box.innerHTML = `<div class="report"><div class="err">${esc(e.message)}</div><p><button class="btn" id="retryRep">Try again</button></p></div>`;
+    box.innerHTML = `<div class="report"><div class="err">${esc(e.message)}</div><p><button class="btn" id="retryRep">${tr("Try again")}</button></p></div>`;
     $("#retryRep").onclick = finishSim;
   }
 }
 
 function renderReport(r) {
   const box = $("#simReport");
-  const names = { communication: "Got it across", accuracy: "Accuracy", politeness: "Politeness", goal: "Goal" };
+  const names = { communication: tr("Got it across"), accuracy: tr("Accuracy"), politeness: tr("Politeness"), goal: tr("Goal") };
   box.innerHTML = `
-    <button class="back" id="repBack"><svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>All situations</button>
+    <button class="back" id="repBack"><svg class="icon" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>${tr("All situations")}</button>
     <div class="report">
-      <div class="section-head"><div><h2>Your report</h2><p>${esc(sim.cur.en)} · ${esc(sim.cur.ko)}</p></div></div>
+      <div class="section-head"><div><h2>${tr("Your report")}</h2><p>${esc(tr(sim.cur.en))} · ${esc(sim.cur.ko)}</p></div></div>
       <div class="summary">${esc(r.summary)}</div>
       <div class="scores">${Object.entries(r.scores || {}).map(([k, v]) => `
         <div class="score"><span>${names[k] || esc(k)}</span><strong>${Number(v) || 0}</strong><div class="meter"><i style="width:${Math.max(0, Math.min(100, Number(v) || 0))}%"></i></div></div>`).join("")}</div>
-      <h3>Say it better</h3><div class="list" id="fixList"></div>
-      <h3>Phrases for next time</h3><div class="phrases" id="repPhrases"></div>
-      ${r.culture_note ? `<div class="tipbox"><span class="lab">Culture note</span><span>${esc(r.culture_note)}</span></div>` : ""}
+      <h3>${tr("Say it better")}</h3><div class="list" id="fixList"></div>
+      <h3>${tr("Phrases for next time")}</h3><div class="phrases" id="repPhrases"></div>
+      ${r.culture_note ? `<div class="tipbox"><span class="lab">${tr("Culture note")}</span><span>${esc(r.culture_note)}</span></div>` : ""}
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" id="simAgain">Try again</button>
-        <button class="btn ghost" id="simOther">Another situation</button>
+        <button class="btn" id="simAgain">${tr("Try again")}</button>
+        <button class="btn ghost" id="simOther">${tr("Another situation")}</button>
       </div>
     </div>`;
   const fl = $("#fixList");
-  if (!(r.fixes || []).length) fl.innerHTML = `<p class="src">Nothing to fix. Great job!</p>`;
+  if (!(r.fixes || []).length) fl.innerHTML = `<p class="src">${tr("Nothing to fix. Great job!")}</p>`;
   (r.fixes || []).forEach(f => {
     const el = document.createElement("div");
     el.className = "fix";
     el.innerHTML = `<span class="said">${esc(f.said)}</span><span class="better">${esc(f.better)}</span><span class="r" style="font-family:var(--mono);color:var(--accent-deep);font-size:.76rem">${esc(f.rom || "")}</span><span class="why">${esc(f.why)}</span>
-      <div class="row" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px"><button class="mini" data-a="l">${ICON.speak} Listen</button><button class="mini" data-a="p">${ICON.mic} Practice</button><button class="mini" data-a="s">${ICON.save} Save</button></div>`;
+      <div class="row" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px"><button class="mini" data-a="l">${ICON.speak} ${tr("Listen")}</button><button class="mini" data-a="p">${ICON.mic} ${tr("Practice")}</button><button class="mini" data-a="s">${ICON.save} ${tr("Save")}</button></div>`;
     $('[data-a="l"]', el).onclick = () => speakKo(f.better);
     $('[data-a="p"]', el).onclick = () => openPractice(el, f.better);
     const sv = $('[data-a="s"]', el);
-    sv.onclick = () => { addToBook({ ko: f.better, rom: f.rom, meaning: "", note: f.why }, sim.cur.en); sv.classList.add("on"); sv.innerHTML = ICON.check + " Saved"; };
+    sv.onclick = () => { addToBook({ ko: f.better, rom: f.rom, meaning: "", note: f.why }, sim.cur.en); sv.classList.add("on"); sv.innerHTML = ICON.check + " " + tr("Saved"); };
     fl.appendChild(el);
   });
   (r.phrases || []).forEach(p => $("#repPhrases").appendChild(phraseCard(p, sim.cur.en)));
@@ -1591,14 +1609,14 @@ function renderBook() {
   list.innerHTML = "";
   $("#flashBtn").disabled = !book.length;
   if (!book.length) {
-    list.innerHTML = `<div class="pb-empty">No phrases yet. Tap <b>Save</b> on any phrase in Ask Munggli or in a situation report.</div>`;
+    list.innerHTML = `<div class="pb-empty">${esc(tr("No phrases yet. Tap Save on any phrase in Ask Munggli or in a situation report."))}</div>`;
     return;
   }
   book.forEach((p, i) => {
     const card = phraseCard(p, p.src);
     const meta = document.createElement("div");
     meta.style.cssText = "display:flex;justify-content:space-between;align-items:center;margin-top:8px";
-    meta.innerHTML = `<span class="src">From ${esc(p.src || "")}</span><button class="mini" data-a="del">Remove</button>`;
+    meta.innerHTML = `<span class="src">${tr("From")} ${esc(tr(p.src || ""))}</span><button class="mini" data-a="del">${tr("Remove")}</button>`;
     $('[data-a="del"]', meta).onclick = () => { book.splice(i, 1); saveBook(); renderBook(); };
     card.appendChild(meta);
     list.appendChild(card);
@@ -1611,18 +1629,18 @@ $("#flashBtn").onclick = () => {
   const area = $("#flashArea");
   const draw = (flipped) => {
     if (i >= deck.length) {
-      area.innerHTML = `<div class="flash"><div class="prompt">Deck done!</div><div class="row"><button class="btn" id="fAgain">Shuffle again</button><button class="btn ghost" id="fClose">Close</button></div></div>`;
+      area.innerHTML = `<div class="flash"><div class="prompt">${tr("Deck done!")}</div><div class="row"><button class="btn" id="fAgain">${tr("Shuffle again")}</button><button class="btn ghost" id="fClose">${tr("Close")}</button></div></div>`;
       $("#fAgain").onclick = () => $("#flashBtn").click(); $("#fClose").onclick = () => area.innerHTML = "";
       return;
     }
     const p = deck[i];
     area.innerHTML = `<div class="flash">
       <div class="progress">${i + 1} / ${deck.length}</div>
-      <div class="prompt">${esc(p.meaning || p.note || "How do you say this?")}</div>
-      ${flipped ? `<div class="k">${esc(p.ko)}</div><div class="r">${esc(p.rom)}</div>` : `<div class="src">Say it in Korean, then flip.</div>`}
+      <div class="prompt">${esc(p.meaning || p.note || tr("How do you say this?"))}</div>
+      ${flipped ? `<div class="k">${esc(p.ko)}</div><div class="r">${esc(p.rom)}</div>` : `<div class="src">${tr("Say it in Korean, then flip.")}</div>`}
       <div class="row">
-        ${flipped ? `<button class="mini" id="fListen">${ICON.speak} Listen</button><button class="mini" id="fPractice">${ICON.mic} Practice</button><button class="btn small" id="fNext">Next</button>`
-                  : `<button class="btn" id="fFlip">Flip card</button>`}
+        ${flipped ? `<button class="mini" id="fListen">${ICON.speak} ${tr("Listen")}</button><button class="mini" id="fPractice">${ICON.mic} ${tr("Practice")}</button><button class="btn small" id="fNext">${tr("Next")}</button>`
+                  : `<button class="btn" id="fFlip">${tr("Flip card")}</button>`}
       </div></div>`;
     if (!flipped) $("#fFlip").onclick = () => { draw(true); speakKo(p.ko); };
     else {
