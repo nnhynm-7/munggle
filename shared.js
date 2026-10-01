@@ -23,22 +23,15 @@ const LANGS = {
 };
 // short: 설정 슬라이더에 보이는 이름
 const LEVELS = {
-  zero: { label: "Beginner", short: "Beginner", guide: "Absolute beginner. Speak very short, simple, slow sentences (under 8 words). Always polite 해요체.", rate: 0.8 },
-  some: { label: "Intermediate", short: "Intermediate", guide: "Knows basic phrases. Use simple everyday Korean, short sentences, polite 해요체.", rate: 0.9 },
-  conv: { label: "Advanced", short: "Advanced", guide: "Can hold a conversation. Speak naturally like real staff, including common service expressions (합쇼체 where natural).", rate: 1.0 },
+  zero: { label: "Beginner", short: "Beginner", guide: "Absolute beginner. Speak very short, simple, slow sentences (under 8 words). Always polite 해요체.", rate: 0.8,
+    teach: "Teach only essential survival words and short phrases (1-4 words). Always include romanization. Usually one phrase per answer. Explain in very simple words. Practice = repeat it or pick the right phrase from two options." },
+  some: { label: "Intermediate", short: "Intermediate", guide: "Knows basic phrases. Use simple everyday Korean, short sentences, polite 해요체.", rate: 0.9,
+    teach: "Teach everyday phrases together with one simple grammar pattern (e.g. -주세요, -있어요?, -이에요/예요, -고 싶어요). Include romanization. Practice = fill in the blank or translate a short sentence." },
+  conv: { label: "Advanced", short: "Advanced", guide: "Can hold a conversation. Speak naturally like real staff, including common service expressions (합쇼체 where natural).", rate: 1.0,
+    teach: "Teach natural, native-like Korean: nuance, politeness levels (합니다/해요/반말), softening words (좀, 혹시), spoken contractions, idioms and current slang. Keep romanization short. Practice = say a full natural sentence for a realistic scene." },
 };
 
-// Ask Munggli 첫 화면 예시 질문 (학습 위주)
-const STARTERS = [
-  { t: "How do I say \"thank you\" politely?", s: "How do I say" },
-  { t: "What's the difference between 안녕하세요 and 안녕?", s: "What's the difference" },
-  { t: "Break down 주세요 for me. When do I use it?", s: "Break it down" },
-  { t: "Teach me to read ㄱ ㄴ ㄷ ㄹ", s: "Read Hangul" },
-  { t: "How do Korean numbers work when I order food?", s: "Numbers" },
-  { t: "Quiz me on 3 café phrases", s: "Quiz me" },
-  { t: "What are some popular Korean slangs?", s: "Korean slangs" },
-  { t: "What do ㅋㅋ, ㅎㅇ, ㄹㅇ and ㅇㅈ mean in texts?", s: "Texting slang" },
-];
+// STARTERS (Intermediate) is kept for older code; see STARTERS_BY_LEVEL below.
 
 // Each situation borrows a Seoul subway line color (badge number = line).
 // staff: 대화 화면에서 멍글이가 맡는 역할 이름
@@ -81,6 +74,176 @@ const SIMS = [
     sug: [{ ko: "머리가 아파요.", rom: "Meoriga apayo.", meaning: "I have a headache." }, { ko: "배가 아파요.", rom: "Baega apayo.", meaning: "My stomach hurts." }] },
 ];
 
+
+/* ---------------- content that changes with the learner's level ---------------- */
+// zero = Beginner, some = Intermediate, conv = Advanced
+
+// Ask Munggli 첫 화면 예시 질문 (수준별)
+const STARTERS_BY_LEVEL = {
+  zero: [
+    { t: "How do I say hello and thank you?", s: "First words" },
+    { t: "Teach me to read ㄱ ㄴ ㄷ ㄹ", s: "Read Hangul" },
+    { t: "How do I say \"this one, please\"?", s: "Ordering" },
+    { t: "How do I count 1 to 5 in Korean?", s: "Numbers" },
+    { t: "How do I ask \"where is the restroom?\"", s: "Asking" },
+    { t: "How do I say yes, no and sorry?", s: "Basics" },
+    { t: "Quiz me on 3 easy words", s: "Quiz me" },
+    { t: "What does ㅋㅋ mean in texts?", s: "Texting slang" },
+  ],
+  some: [
+    { t: "How do I say \"thank you\" politely?", s: "How do I say" },
+    { t: "What's the difference between 안녕하세요 and 안녕?", s: "What's the difference" },
+    { t: "Break down 주세요 for me. When do I use it?", s: "Break it down" },
+    { t: "Teach me to read ㄱ ㄴ ㄷ ㄹ", s: "Read Hangul" },
+    { t: "How do Korean numbers work when I order food?", s: "Numbers" },
+    { t: "Quiz me on 3 café phrases", s: "Quiz me" },
+    { t: "What are some popular Korean slangs?", s: "Korean slangs" },
+    { t: "What do ㅋㅋ, ㅎㅇ, ㄹㅇ and ㅇㅈ mean in texts?", s: "Texting slang" },
+  ],
+  conv: [
+    { t: "When do I use 합니다, 해요 and 반말?", s: "Politeness levels" },
+    { t: "How do I refuse politely without sounding rude?", s: "Nuance" },
+    { t: "How do Koreans really say \"what's up?\" to friends?", s: "Natural speech" },
+    { t: "Explain the nuance of 좀 and 혹시", s: "Softening words" },
+    { t: "How do I make small talk with a taxi driver?", s: "Small talk" },
+    { t: "Correct my Korean: 저는 한국 음식을 너무 좋아해요", s: "Check my Korean" },
+    { t: "What are some popular Korean slangs?", s: "Korean slangs" },
+    { t: "Quiz me with a real-life situation", s: "Quiz me" },
+  ],
+};
+
+// 홈 화면 "Today's phrase" (수준별, 날짜마다 바뀜)
+const TODAY_BY_LEVEL = {
+  zero: [
+    { ko: "감사합니다", rom: "gam-sa-ham-ni-da", meaning: "Thank you" },
+    { ko: "안녕하세요", rom: "an-nyeong-ha-se-yo", meaning: "Hello" },
+    { ko: "이거 주세요", rom: "i-geo ju-se-yo", meaning: "This one, please" },
+    { ko: "얼마예요?", rom: "eol-ma-ye-yo?", meaning: "How much is it?" },
+    { ko: "화장실 어디예요?", rom: "hwa-jang-sil eo-di-ye-yo?", meaning: "Where's the restroom?" },
+    { ko: "물 주세요", rom: "mul ju-se-yo", meaning: "Water, please" },
+    { ko: "맛있어요!", rom: "ma-si-sseo-yo!", meaning: "It's delicious!" },
+    { ko: "괜찮아요", rom: "gwaen-cha-na-yo", meaning: "It's okay / No thanks" },
+    { ko: "죄송합니다", rom: "joe-song-ham-ni-da", meaning: "I'm sorry" },
+    { ko: "여기요!", rom: "yeo-gi-yo!", meaning: "Excuse me! (calling staff)" },
+    { ko: "네 / 아니요", rom: "ne / a-ni-yo", meaning: "Yes / No" },
+    { ko: "잠깐만요", rom: "jam-kkan-man-yo", meaning: "Just a moment" },
+  ],
+  some: [
+    { ko: "천천히 말해 주세요", rom: "cheon-cheon-hi mal-hae ju-se-yo", meaning: "Please speak slowly" },
+    { ko: "카드 돼요?", rom: "ka-deu dwae-yo?", meaning: "Can I pay by card?" },
+    { ko: "사진 찍어 주세요", rom: "sa-jin jji-geo ju-se-yo", meaning: "Could you take a photo?" },
+    { ko: "이거 매워요?", rom: "i-geo mae-wo-yo?", meaning: "Is this spicy?" },
+    { ko: "포장해 주세요", rom: "po-jang-hae ju-se-yo", meaning: "To go, please" },
+    { ko: "영수증 주세요", rom: "yeong-su-jeung ju-se-yo", meaning: "Receipt, please" },
+    { ko: "다시 한번 말해 주세요", rom: "da-si han-beon mal-hae ju-se-yo", meaning: "Could you say that again?" },
+    { ko: "추천해 주세요", rom: "chu-cheon-hae ju-se-yo", meaning: "What do you recommend?" },
+    { ko: "얼마나 걸려요?", rom: "eol-ma-na geol-lyeo-yo?", meaning: "How long does it take?" },
+    { ko: "한국어 조금 해요", rom: "han-gu-geo jo-geum hae-yo", meaning: "I speak a little Korean" },
+    { ko: "잘 먹겠습니다", rom: "jal meok-get-seum-ni-da", meaning: "Thanks for the meal (before eating)" },
+    { ko: "안녕히 계세요", rom: "an-nyeong-hi gye-se-yo", meaning: "Goodbye (when you are leaving)" },
+  ],
+  conv: [
+    { ko: "혹시 자리 있어요?", rom: "hok-si ja-ri i-sseo-yo?", meaning: "Do you happen to have a table?" },
+    { ko: "덜 맵게 해 주실 수 있어요?", rom: "deol maep-ge hae ju-sil su i-sseo-yo?", meaning: "Could you make it less spicy?" },
+    { ko: "계산은 따로 할게요", rom: "gye-sa-neun tta-ro hal-ge-yo", meaning: "We'll pay separately" },
+    { ko: "이거 교환할 수 있을까요?", rom: "i-geo gyo-hwan-hal su i-sseul-kka-yo?", meaning: "Could I exchange this?" },
+    { ko: "길 좀 여쭤봐도 될까요?", rom: "gil jom yeo-jjwo-bwa-do doel-kka-yo?", meaning: "May I ask for directions?" },
+    { ko: "생각보다 너무 맛있네요!", rom: "saeng-gak-bo-da neo-mu ma-sin-ne-yo!", meaning: "This is way better than I expected!" },
+    { ko: "짐 좀 맡겨도 될까요?", rom: "jim jom mat-gyeo-do doel-kka-yo?", meaning: "Could I leave my luggage here?" },
+    { ko: "다음 역에서 내리면 돼요?", rom: "da-eum yeo-ge-seo nae-ri-myeon dwae-yo?", meaning: "Do I get off at the next station?" },
+    { ko: "사진 한 장만 찍어 주실 수 있어요?", rom: "sa-jin han jang-man jji-geo ju-sil su i-sseo-yo?", meaning: "Could you take just one photo for me?" },
+    { ko: "영어 메뉴판 있어요?", rom: "yeong-eo me-nyu-pan i-sseo-yo?", meaning: "Do you have an English menu?" },
+    { ko: "여기 완전 핫플이네요!", rom: "yeo-gi wan-jeon hat-peu-ri-ne-yo!", meaning: "This place is such a hot spot!" },
+    { ko: "오늘 정말 감사했습니다", rom: "o-neul jeong-mal gam-sa-haet-seum-ni-da", meaning: "Thank you so much for today" },
+  ],
+};
+
+// 상황극의 수준별 버전: Intermediate(some)는 SIMS의 기본값을 쓰고, Beginner/Advanced는 여기서 바꾼다.
+const SIM_LEVELS = {
+  bbq: {
+    zero: { goal: "Say how many people you are and order one dish.",
+      open: { ko: "어서 오세요! 몇 분이세요?", rom: "Eo-seo o-se-yo! Myeot bu-ni-se-yo?", meaning: "Welcome! How many people?" },
+      sug: [{ ko: "두 명이요.", rom: "Du myeong-i-yo.", meaning: "Two people." }, { ko: "한 명이요.", rom: "Han myeong-i-yo.", meaning: "One person." }] },
+    conv: { goal: "It's busy: agree to wait for a table for 3, order samgyeopsal and a drink, ask the server to grill the meat, and split the bill.",
+      open: { ko: "어서 오세요! 지금 자리가 다 차서 10분 정도 기다리셔야 하는데 괜찮으세요?", rom: "Eo-seo o-se-yo! Ji-geum ja-ri-ga da cha-seo sip-bun jeong-do gi-da-ri-syeo-ya ha-neun-de gwaen-cha-neu-se-yo?", meaning: "Welcome! We're full right now, so you'd need to wait about 10 minutes. Is that okay?" },
+      sug: [{ ko: "네, 기다릴게요. 세 명이에요.", rom: "Ne, gi-da-ril-ge-yo. Se myeong-i-e-yo.", meaning: "Sure, we'll wait. There are three of us." }, { ko: "혹시 바깥 자리는 없나요?", rom: "Hok-si ba-kkat ja-ri-neun eom-na-yo?", meaning: "Is there any seating outside, by chance?" }] },
+  },
+  cvs: {
+    zero: { goal: "Pay for a snack and answer yes or no about a bag.",
+      open: { ko: "봉투 필요하세요?", rom: "Bong-tu pi-ryo-ha-se-yo?", meaning: "Do you need a bag?" },
+      sug: [{ ko: "네, 주세요.", rom: "Ne, ju-se-yo.", meaning: "Yes, please." }, { ko: "아니요, 괜찮아요.", rom: "A-ni-yo, gwaen-cha-na-yo.", meaning: "No, I'm fine." }] },
+    conv: { goal: "Use a 1+1 deal, ask to heat a lunchbox, pay with your transit card, and say you don't need the receipt.",
+      open: { ko: "이거 1+1 행사 상품이라 하나 더 가져오셔도 돼요.", rom: "I-geo won-peul-leo-seu-won haeng-sa sang-pu-mi-ra ha-na deo ga-jyeo-o-syeo-do dwae-yo.", meaning: "This is a buy-one-get-one item, so you can grab another one." },
+      sug: [{ ko: "아, 그래요? 하나 더 가져올게요.", rom: "A, geu-rae-yo? Ha-na deo ga-jyeo-ol-ge-yo.", meaning: "Oh really? I'll grab another one." }, { ko: "괜찮아요, 이것만 계산해 주세요.", rom: "Gwaen-cha-na-yo, i-geon-man gye-san-hae ju-se-yo.", meaning: "That's okay, just this one please." }] },
+  },
+  taxi: {
+    zero: { goal: "Tell the driver where you want to go.",
+      open: { ko: "어디로 가세요?", rom: "Eo-di-ro ga-se-yo?", meaning: "Where to?" },
+      sug: [{ ko: "명동이요.", rom: "Myeong-dong-i-yo.", meaning: "Myeongdong, please." }, { ko: "여기요.", rom: "Yeo-gi-yo.", meaning: "Here (showing the address)." }] },
+    conv: { goal: "Give the destination, ask the driver to take a less crowded route, ask roughly how much it will cost, and pay by card.",
+      open: { ko: "어디로 모실까요? 지금 퇴근 시간이라 좀 막힐 수도 있어요.", rom: "Eo-di-ro mo-sil-kka-yo? Ji-geum toe-geun si-ga-ni-ra jom ma-kil su-do i-sseo-yo.", meaning: "Where can I take you? It's rush hour, so traffic might be heavy." },
+      sug: [{ ko: "강남역이요. 혹시 덜 막히는 길로 가 주실 수 있어요?", rom: "Gang-nam-yeo-gi-yo. Hok-si deol ma-ki-neun gil-lo ga ju-sil su i-sseo-yo?", meaning: "Gangnam Station. Could you take a less busy route?" }, { ko: "요금 대충 얼마 정도 나와요?", rom: "Yo-geum dae-chung eol-ma jeong-do na-wa-yo?", meaning: "Roughly how much will the fare be?" }] },
+  },
+  subway: {
+    zero: { goal: "Ask where Line 2 is.",
+      open: { ko: "도와드릴까요?", rom: "Do-wa-deu-ril-kka-yo?", meaning: "Can I help you?" },
+      sug: [{ ko: "2호선 어디예요?", rom: "I-ho-seon eo-di-ye-yo?", meaning: "Where is Line 2?" }, { ko: "화장실 어디예요?", rom: "Hwa-jang-sil eo-di-ye-yo?", meaning: "Where's the restroom?" }] },
+    conv: { goal: "Report that you left your bag on the train, describe it (color, where you sat), and ask how to get it back.",
+      open: { ko: "네, 무슨 일이세요?", rom: "Ne, mu-seun i-ri-se-yo?", meaning: "Yes, what happened?" },
+      sug: [{ ko: "가방을 지하철에 두고 내렸어요.", rom: "Ga-bang-eul ji-ha-cheo-re du-go nae-ryeo-sseo-yo.", meaning: "I left my bag on the train." }, { ko: "분실물 센터는 어디에 있어요?", rom: "Bun-sil-mul sen-teo-neun eo-di-e i-sseo-yo?", meaning: "Where is the lost and found?" }] },
+  },
+  cafe: {
+    zero: { goal: "Order one drink.",
+      open: { ko: "주문하시겠어요?", rom: "Ju-mun-ha-si-ge-sseo-yo?", meaning: "Ready to order?" },
+      sug: [{ ko: "아메리카노 주세요.", rom: "A-me-ri-ka-no ju-se-yo.", meaning: "An americano, please." }, { ko: "라떼 주세요.", rom: "Ra-tte ju-se-yo.", meaning: "A latte, please." }] },
+    conv: { goal: "Order a customized drink (less ice, oat milk, extra shot), ask for the Wi-Fi password, and use a stamp card.",
+      open: { ko: "안녕하세요, 주문 도와드릴게요. 매장에서 드시고 가세요?", rom: "An-nyeong-ha-se-yo, ju-mun do-wa-deu-ril-ge-yo. Mae-jang-e-seo deu-si-go ga-se-yo?", meaning: "Hello, I'll take your order. Will you have it here?" },
+      sug: [{ ko: "네, 먹고 갈게요. 아이스 라떼 하나요, 얼음 적게 오트 우유로 해 주세요.", rom: "Ne, meok-go gal-ge-yo. A-i-seu ra-tte ha-na-yo, eo-reum jeok-ge o-teu u-yu-ro hae ju-se-yo.", meaning: "Yes, for here. One iced latte with less ice and oat milk, please." }, { ko: "포장할게요. 샷 추가 돼요?", rom: "Po-jang-hal-ge-yo. Syat chu-ga dwae-yo?", meaning: "To go. Can I add an extra shot?" }] },
+  },
+  shop: {
+    zero: { goal: "Ask how much one item costs.",
+      open: { ko: "어서 오세요~", rom: "Eo-seo o-se-yo~", meaning: "Welcome~" },
+      sug: [{ ko: "이거 얼마예요?", rom: "I-geo eol-ma-ye-yo?", meaning: "How much is this?" }, { ko: "그냥 볼게요.", rom: "Geu-nyang bol-ge-yo.", meaning: "I'm just looking." }] },
+    conv: { goal: "Try something on, ask for another size and color, check if the sale applies, and ask about the exchange policy.",
+      open: { ko: "안녕하세요~ 오늘 신상 20% 세일 중이에요. 편하게 보세요!", rom: "An-nyeong-ha-se-yo~ O-neul sin-sang i-sip peo-sen-teu se-il jung-i-e-yo. Pyeon-ha-ge bo-se-yo!", meaning: "Hello~ New arrivals are 20% off today. Take your time!" },
+      sug: [{ ko: "이거 다른 색도 있어요? 입어 봐도 될까요?", rom: "I-geo da-reun saek-do i-sseo-yo? I-beo bwa-do doel-kka-yo?", meaning: "Does this come in other colors? May I try it on?" }, { ko: "교환은 언제까지 돼요?", rom: "Gyo-hwa-neun eon-je-kka-ji dwae-yo?", meaning: "Until when can I exchange it?" }] },
+  },
+  olive: {
+    zero: { goal: "Ask if they have sunscreen and buy it.",
+      open: { ko: "뭐 찾으세요?", rom: "Mwo cha-jeu-se-yo?", meaning: "What are you looking for?" },
+      sug: [{ ko: "선크림 있어요?", rom: "Seon-keu-rim i-sseo-yo?", meaning: "Do you have sunscreen?" }, { ko: "이거 주세요.", rom: "I-geo ju-se-yo.", meaning: "This one, please." }] },
+    conv: { goal: "Ask for products for sensitive skin, compare two sunscreens, use the 1+1 deal, and get a tax refund.",
+      open: { ko: "찾으시는 거 있으세요? 오늘 선케어 제품 1+1 행사 중이에요.", rom: "Cha-jeu-si-neun geo i-sseu-se-yo? O-neul seon-ke-eo je-pum won-peul-leo-seu-won haeng-sa jung-i-e-yo.", meaning: "Looking for anything? Sun care products are buy-one-get-one today." },
+      sug: [{ ko: "민감한 피부에 맞는 선크림 추천해 주세요.", rom: "Min-gam-han pi-bu-e man-neun seon-keu-rim chu-cheon-hae ju-se-yo.", meaning: "Please recommend a sunscreen for sensitive skin." }, { ko: "이 두 개는 뭐가 달라요?", rom: "I du gae-neun mwo-ga dal-la-yo?", meaning: "What's the difference between these two?" }] },
+  },
+  hotel: {
+    zero: { goal: "Say you have a reservation and get your room key.",
+      open: { ko: "체크인하세요?", rom: "Che-keu-in-ha-se-yo?", meaning: "Checking in?" },
+      sug: [{ ko: "네, 예약했어요.", rom: "Ne, ye-ya-kae-sseo-yo.", meaning: "Yes, I have a reservation." }, { ko: "네.", rom: "Ne.", meaning: "Yes." }] },
+    conv: { goal: "Ask for early check-in, leave your luggage if the room isn't ready, request a quiet room, and ask about late checkout.",
+      open: { ko: "안녕하세요. 체크인은 오후 3시부터인데, 어떻게 도와드릴까요?", rom: "An-nyeong-ha-se-yo. Che-keu-i-neun o-hu se-si-bu-teo-in-de, eo-tteo-ke do-wa-deu-ril-kka-yo?", meaning: "Hello. Check-in starts at 3 p.m. How can I help you?" },
+      sug: [{ ko: "혹시 일찍 체크인할 수 있을까요?", rom: "Hok-si il-jjik che-keu-in-hal su i-sseul-kka-yo?", meaning: "Would early check-in be possible?" }, { ko: "그럼 짐 좀 맡길 수 있을까요?", rom: "Geu-reom jim jom mat-gil su i-sseul-kka-yo?", meaning: "Then could I leave my luggage?" }] },
+  },
+  pharm: {
+    zero: { goal: "Say what hurts.",
+      open: { ko: "어디가 아파요?", rom: "Eo-di-ga a-pa-yo?", meaning: "Where does it hurt?" },
+      sug: [{ ko: "머리가 아파요.", rom: "Meo-ri-ga a-pa-yo.", meaning: "My head hurts." }, { ko: "배가 아파요.", rom: "Bae-ga a-pa-yo.", meaning: "My stomach hurts." }] },
+    conv: { goal: "Describe your symptoms in detail (since when, how bad), mention an allergy, and ask about side effects.",
+      open: { ko: "어떻게 오셨어요? 증상이 언제부터 있었어요?", rom: "Eo-tteo-ke o-syeo-sseo-yo? Jeung-sang-i eon-je-bu-teo i-sseo-sseo-yo?", meaning: "What brings you in? How long have you had symptoms?" },
+      sug: [{ ko: "어제부터 열이 나고 목이 아파요.", rom: "Eo-je-bu-teo yeo-ri na-go mo-gi a-pa-yo.", meaning: "I've had a fever and a sore throat since yesterday." }, { ko: "저 페니실린 알레르기가 있어요.", rom: "Jeo pe-ni-sil-lin al-le-reu-gi-ga i-sseo-yo.", meaning: "I'm allergic to penicillin." }] },
+  },
+};
+
+// The situation as the learner sees it at their level (goal, first line, hints)
+function simFor(id, level) {
+  const base = SIMS.find(s => s.id === id);
+  if (!base) return null;
+  const over = (SIM_LEVELS[id] || {})[level];
+  return over ? { ...base, ...over } : base;
+}
+
+const STARTERS = STARTERS_BY_LEVEL.some;
+
 /* ---------------- prompts ---------------- */
 const P = {
   ask: ({ lang, level }) => `You are Munggli (멍글이), a fluffy white Jindo puppy (Korea's native Jindo dog breed) and a warm, patient Korean tutor for foreign travelers who want to LEARN Korean before and during their trip to Korea.
@@ -88,6 +251,7 @@ Your job is teaching, not translating: help the learner understand and remember 
 
 Learner's language: ${lang.name}. Write every explanation in that language.
 Learner's Korean level: ${level.label}. ${level.guide}
+How to teach at this level: ${level.teach}
 
 Rules
 - Teach ONE clear learning point per answer. Keep it short and friendly, like a good tutor.
@@ -169,10 +333,10 @@ function buildPrompt({ kind, lang, level, simId }) {
   if (!Object.hasOwn(P, kind)) return null;
   const L = Object.hasOwn(LANGS, lang) ? LANGS[lang] : null;
   const V = Object.hasOwn(LEVELS, level) ? LEVELS[level] : null;
-  const S = SIMS.find(s => s.id === simId) || null;
+  const S = simFor(simId, level);
   if (!L || !V || ((kind === "sim" || kind === "report") && !S)) return null;
   return { system: P[kind]({ lang: L, level: V, sim: S }), maxTokens: MAX_TOKENS[kind] };
 }
 
-root.MALHAE = { LANGS, LEVELS, STARTERS, SIMS, buildPrompt };
+root.MALHAE = { LANGS, LEVELS, STARTERS, STARTERS_BY_LEVEL, TODAY_BY_LEVEL, SIMS, simFor, buildPrompt };
 })(typeof window !== "undefined" ? window : globalThis);

@@ -100,15 +100,23 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
 }
 .today {
   position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; max-width: 100%;
-  border: 1px solid rgba(255,255,255,.9); border-radius: 99px; padding: 8px 14px 8px 8px;
+  border: 1px solid rgba(255,255,255,.9); border-radius: 22px; padding: 8px 14px 8px 8px;
   background: rgba(255,255,255,.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 6px 20px rgba(29,28,36,.06); font-size: .8rem; text-align: left;
 }
 .today .tag { flex: none; background: var(--pink); color: var(--pink-ink); font-weight: 700; font-size: .68rem; padding: 4px 9px; border-radius: 99px; }
-.today .k { font-weight: 700; white-space: nowrap; }
-.today .m { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.today .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.today .k { font-weight: 700; }
+.today .m { color: var(--muted); font-size: .74rem; line-height: 1.3; }
+.today .icon { flex: none; }
 .today .icon { width: 16px; height: 16px; color: var(--pink-ink); }
 
+/* 멍글이's greeting above the character */
+.hello { position: relative; z-index: 1; margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.hello-ko { border: 0; background: none; padding: 0; font-size: 1.7rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.2; color: var(--ink); }
+.hello-ko::after { content: ""; display: block; height: 8px; margin: -10px 6px 0; border-radius: 4px; background: var(--pink); opacity: .9; position: relative; z-index: -1; }
+.hello-ko:hover { color: var(--pink-ink); }
+.hello-en { margin: 0; font-size: .88rem; color: var(--muted); max-width: 30ch; }
 .stage { position: relative; z-index: 1; flex: 1; width: 100%; display: grid; place-items: center; min-height: 360px; }
 .mochi-btn { position: relative; width: min(92vw, 360px); border: 0; background: none; padding: 0; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 .mochi-btn svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -366,11 +374,14 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
       <div class="home">
         <button class="today" id="todayCard" aria-label="Today's phrase, tap to listen">
           <span class="tag">Today's phrase</span>
-          <span class="k" id="todayKo"></span>
-          <span class="m" id="todayMeaning"></span>
+          <span class="txt"><span class="k" id="todayKo"></span><span class="m" id="todayMeaning"></span></span>
           <svg class="icon" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
         </button>
         <span class="vh" id="todayRom"></span>
+        <div class="hello">
+          <button class="hello-ko" id="helloKo" aria-label="안녕! 나는 멍글이야. Tap to listen">안녕! 나는 멍글이야</button>
+          <p class="hello-en">Hi, I'm Munggli, your Korean buddy.</p>
+        </div>
         <div class="stage">
           <div class="say-bubble" id="mochiSay" aria-live="polite"></div>
           <button class="mochi-btn" id="mochi" aria-label="멍글이, the Jindo puppy. Press to squeeze">
@@ -719,24 +730,9 @@ const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = (s = "") => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 /* ---------------- data (public/shared.js) ---------------- */
-const { LANGS, LEVELS, STARTERS, SIMS, buildPrompt } = window.MALHAE;
+const { LANGS, LEVELS, STARTERS_BY_LEVEL, TODAY_BY_LEVEL, SIMS, simFor, buildPrompt } = window.MALHAE;
 const LEVEL_KEYS = ["zero", "some", "conv"];
 
-// Home card: one phrase per day
-const TODAY = [
-  { ko: "감사합니다", rom: "gam-sa-ham-ni-da", meaning: "Thank you" },
-  { ko: "이거 주세요", rom: "i-geo ju-se-yo", meaning: "This one, please" },
-  { ko: "얼마예요?", rom: "eol-ma-ye-yo?", meaning: "How much is it?" },
-  { ko: "화장실 어디예요?", rom: "hwa-jang-sil eo-di-ye-yo?", meaning: "Where's the restroom?" },
-  { ko: "맛있어요!", rom: "ma-si-sseo-yo!", meaning: "It's delicious!" },
-  { ko: "괜찮아요", rom: "gwaen-cha-na-yo", meaning: "It's okay / No thanks" },
-  { ko: "천천히 말해 주세요", rom: "cheon-cheon-hi mal-hae ju-se-yo", meaning: "Please speak slowly" },
-  { ko: "카드 돼요?", rom: "ka-deu dwae-yo?", meaning: "Can I pay by card?" },
-  { ko: "물 주세요", rom: "mul ju-se-yo", meaning: "Water, please" },
-  { ko: "사진 찍어 주세요", rom: "sa-jin jji-geo ju-se-yo", meaning: "Could you take a photo?" },
-  { ko: "잘 먹겠습니다", rom: "jal meok-get-seum-ni-da", meaning: "Thanks for the meal" },
-  { ko: "안녕히 계세요", rom: "an-nyeong-hi gye-se-yo", meaning: "Goodbye (you're leaving)" },
-];
 // Munggli says one of these every 5th squeeze (text only, no voice)
 const HELLOS = ["멍!", "안녕하세요!", "간지러워요~", "왈왈!", "같이 말해 봐요!", "화이팅!"];
 
@@ -765,7 +761,11 @@ function renderPrefs() {
     ? "This browser has no male Korean voice. Open the site in Microsoft Edge for a male voice."
     : "";
 }
-function savePrefs() { store.set("malhae.prefs", prefs); renderPrefs(); }
+let shownLevel = prefs.level;
+function savePrefs() {
+  store.set("malhae.prefs", prefs); renderPrefs();
+  if (prefs.level !== shownLevel) { shownLevel = prefs.level; renderToday(); renderStarters(); }
+}
 $("#prefLang").onchange = e => { prefs.lang = e.target.value; savePrefs(); };
 $("#prefLevel").oninput = e => { prefs.level = LEVEL_KEYS[+e.target.value] || "zero"; savePrefs(); };
 $$("#levelTicks span").forEach((s, j) => s.onclick = () => { prefs.level = LEVEL_KEYS[j]; savePrefs(); });
@@ -1169,11 +1169,16 @@ const thinkingHTML = '<div class="bubble thinking"><i></i><i></i><i></i></div>';
 /* =============================================================
    ⓪ Home
    ============================================================= */
-const today = TODAY[Math.floor(Date.now() / 864e5) % TODAY.length];
-$("#todayKo").textContent = today.ko;
-$("#todayRom").textContent = today.rom;
-$("#todayMeaning").textContent = today.meaning;
-$("#todayCard").onclick = () => speakKo(today.ko);
+function renderToday() {
+  const list = TODAY_BY_LEVEL[prefs.level] || TODAY_BY_LEVEL.zero;
+  const today = list[Math.floor(Date.now() / 864e5) % list.length];
+  $("#todayKo").textContent = today.ko;
+  $("#todayRom").textContent = today.rom;
+  $("#todayMeaning").textContent = today.meaning;
+  $("#todayCard").onclick = () => speakKo(today.ko);
+}
+renderToday();
+$("#helloKo").onclick = () => speakKo("안녕! 나는 멍글이야");
 
 // ASMR sounds, synthesized in the browser (no audio files)
 //  · Munggli = 쫀득 squishy squeeze, modeled on the reference clips: a slow swelling squeeze with body + rubbery resonances
@@ -1319,13 +1324,17 @@ mochi.addEventListener("animationend", e => {
    ① Ask Munggli (tutor)
    ============================================================= */
 const askTurns = [];   // LLM history
-STARTERS.forEach(s => {
-  const b = document.createElement("button");
-  b.className = "starter";
-  b.innerHTML = `<span class="lab">${esc(s.s)}</span><span>${esc(s.t)}</span>`;
-  b.onclick = () => askSend(s.t);
-  $("#starters").appendChild(b);
-});
+function renderStarters() {
+  $("#starters").innerHTML = "";
+  (STARTERS_BY_LEVEL[prefs.level] || STARTERS_BY_LEVEL.some).forEach(s => {
+    const b = document.createElement("button");
+    b.className = "starter";
+    b.innerHTML = `<span class="lab">${esc(s.s)}</span><span>${esc(s.t)}</span>`;
+    b.onclick = () => askSend(s.t);
+    $("#starters").appendChild(b);
+  });
+}
+renderStarters();
 
 $("#askBack").onclick = () => {
   stopSpeech();
@@ -1437,6 +1446,7 @@ function renderSuggestions(list) {
 }
 
 function startSim(s) {
+  s = simFor(s.id, prefs.level) || s;
   Object.assign(sim, { cur: s, turns: [], log: [], done: false });
   $("#simThread").innerHTML = "";
   $("#simBadge").textContent = s.line; $("#simBadge").style.background = `var(--p${s.line})`; $("#simBadge").style.color = `var(--t${s.line})`;
