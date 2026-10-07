@@ -296,7 +296,17 @@ Then could I leave my luggage?
 Describe your symptoms in detail (since when, how bad), mention an allergy, and ask about side effects.
 What brings you in? How long have you had symptoms?
 I've had a fever and a sore throat since yesterday.
-I'm allergic to penicillin.`.split("\n");
+I'm allergic to penicillin.
+Learn from a photo
+Snap a menu, sign or product. Munggli reads it with you and shows what to say.
+Add a photo
+What it says
+Say it here
+Practice this as a role-play
+Help me read this and use it.
+Couldn't open that photo. Try a JPG or PNG.
+Reading photos works on the full website, not in this preview.
+That photo is too big. Try another one.`.split("\n");
 const L = {
   ja: `今日のフレーズ
 こんにちは、ぼくはムングリ。きみの韓国語のおともだちだよ。
@@ -594,7 +604,17 @@ Wi-Fi のパスワードは何ですか？
 症状をくわしく伝え（いつから、どのくらいひどいか）、アレルギーを伝えて、副作用について聞きましょう。
 どうされましたか？症状はいつからありますか？
 昨日から熱があって、のどが痛いです。
-ペニシリンアレルギーがあります。`,
+ペニシリンアレルギーがあります。
+写真で学ぶ
+メニューや看板、商品を撮ってみて。ムングリが一緒に読んで、何て言えばいいか教えるよ。
+写真を追加
+書いてあること
+ここで使える言い方
+これでロールプレイ練習
+これを読んで、使い方を教えて。
+その写真を開けませんでした。JPG か PNG を試してください。
+写真の読み取りは完全版のサイトで使えます。このプレビューでは使えません。
+写真が大きすぎます。別の写真を試してください。`,
   zh: `今日一句
 你好，我是蒙格利，你的韩语小伙伴。
 全部话题
@@ -891,7 +911,17 @@ Wi-Fi 密码是什么？
 详细描述症状（从什么时候开始、有多严重），说明过敏情况，并询问副作用。
 您哪里不舒服？症状是从什么时候开始的？
 我从昨天开始发烧，嗓子也疼。
-我对青霉素过敏。`,
+我对青霉素过敏。
+拍照学韩语
+拍下菜单、招牌或商品，蒙格利陪你一起读，并告诉你该怎么说。
+添加照片
+上面写着什么
+在这里可以这样说
+用这个练习情景对话
+帮我读一下这个，并教我怎么用。
+无法打开这张照片。请试试 JPG 或 PNG。
+照片识读功能需要在完整网站上使用，此预览中无法使用。
+照片太大了。请换一张试试。`,
   zht: `今日一句
 你好，我是蒙格利，你的韓語小夥伴。
 全部主題
@@ -1188,7 +1218,17 @@ Wi-Fi 密碼是什麼？
 詳細描述症狀（從什麼時候開始、有多嚴重），說明過敏情況，並詢問副作用。
 您哪裡不舒服？症狀是從什麼時候開始的？
 我從昨天開始發燒，喉嚨也痛。
-我對盤尼西林過敏。`,
+我對盤尼西林過敏。
+拍照學韓語
+拍下菜單、招牌或商品，蒙格利陪你一起讀，並告訴你該怎麼說。
+新增照片
+上面寫著什麼
+在這裡可以這樣說
+用這個練習情境對話
+幫我讀一下這個，並教我怎麼用。
+無法開啟這張照片。請試試 JPG 或 PNG。
+照片識讀功能需要在完整網站上使用，此預覽中無法使用。
+照片太大了。請換一張試試。`,
   vi: `Câu hôm nay
 Chào bạn, mình là Munggli, bạn học tiếng Hàn của bạn.
 Tất cả chủ đề
@@ -1485,7 +1525,17 @@ Vậy tôi gửi hành lý được không ạ?
 Mô tả triệu chứng chi tiết (từ khi nào, nặng thế nào), nói về dị ứng và hỏi về tác dụng phụ.
 Anh/chị bị sao ạ? Triệu chứng có từ khi nào?
 Tôi bị sốt và đau họng từ hôm qua.
-Tôi bị dị ứng penicillin.`,
+Tôi bị dị ứng penicillin.
+Học từ ảnh
+Chụp thực đơn, biển hiệu hoặc sản phẩm. Munggli sẽ đọc cùng bạn và chỉ bạn nên nói gì.
+Thêm ảnh
+Trên đó viết gì
+Nói ở đây thế này
+Luyện tình huống với ảnh này
+Giúp tôi đọc cái này và cách dùng nó.
+Không mở được ảnh đó. Hãy thử JPG hoặc PNG.
+Đọc ảnh chỉ dùng được trên trang web đầy đủ, không dùng được trong bản xem trước này.
+Ảnh quá lớn. Hãy thử ảnh khác.`,
   th: `ประโยควันนี้
 สวัสดี ฉันคือมุงกลี เพื่อนเรียนภาษาเกาหลีของคุณ
 หัวข้อทั้งหมด
@@ -1782,7 +1832,17 @@ Olive Young
 อธิบายอาการอย่างละเอียด (เป็นตั้งแต่เมื่อไร หนักแค่ไหน) บอกว่าแพ้ยา และถามเรื่องผลข้างเคียง
 เป็นอะไรมาคะ? มีอาการตั้งแต่เมื่อไรคะ?
 มีไข้และเจ็บคอตั้งแต่เมื่อวาน
-แพ้ยาเพนิซิลลิน`,
+แพ้ยาเพนิซิลลิน
+เรียนจากรูปภาพ
+ถ่ายรูปเมนู ป้าย หรือสินค้า แล้วมุงกลีจะอ่านไปด้วยกันและบอกว่าควรพูดว่าอะไร
+เพิ่มรูปภาพ
+ในรูปเขียนว่า
+พูดที่นี่ได้ว่า
+ฝึกบทบาทสมมติจากรูปนี้
+ช่วยอ่านอันนี้และบอกวิธีใช้หน่อย
+เปิดรูปนี้ไม่ได้ ลองใช้ JPG หรือ PNG
+การอ่านรูปภาพใช้ได้บนเว็บไซต์ฉบับเต็ม ใช้ไม่ได้ในหน้าตัวอย่างนี้
+รูปใหญ่เกินไป ลองรูปอื่น`,
   id: `Frasa hari ini
 Halo, aku Munggli, teman belajar bahasa Koreamu.
 Semua topik
@@ -2079,7 +2139,17 @@ Kalau begitu, boleh saya titip barang?
 Jelaskan gejalamu dengan rinci (sejak kapan, seberapa parah), sebutkan alergi, dan tanya efek sampingnya.
 Ada keluhan apa? Sejak kapan gejalanya?
 Saya demam dan sakit tenggorokan sejak kemarin.
-Saya alergi penisilin.`,
+Saya alergi penisilin.
+Belajar dari foto
+Foto menu, papan tanda, atau produk. Munggli membacanya bersamamu dan menunjukkan apa yang bisa kamu ucapkan.
+Tambah foto
+Isi tulisannya
+Ucapkan di sini
+Latihan bermain peran dengan ini
+Bantu aku membaca ini dan cara memakainya.
+Foto itu tidak bisa dibuka. Coba JPG atau PNG.
+Membaca foto hanya bisa di situs lengkap, tidak di pratinjau ini.
+Fotonya terlalu besar. Coba foto lain.`,
   es: `Frase del día
 ¡Hola! Soy Munggli, tu compañero de coreano.
 Todos los temas
@@ -2376,7 +2446,17 @@ Entonces, ¿podría dejar mi equipaje?
 Describe tus síntomas con detalle (desde cuándo, qué tan fuerte), menciona una alergia y pregunta por los efectos secundarios.
 ¿Qué le trae por aquí? ¿Desde cuándo tiene síntomas?
 Tengo fiebre y dolor de garganta desde ayer.
-Soy alérgico a la penicilina.`,
+Soy alérgico a la penicilina.
+Aprende con una foto
+Fotografía un menú, un cartel o un producto. Munggli lo lee contigo y te muestra qué decir.
+Añadir foto
+Lo que dice
+Dilo aquí
+Practicar esto como juego de rol
+Ayúdame a leer esto y a usarlo.
+No se pudo abrir esa foto. Prueba con JPG o PNG.
+La lectura de fotos funciona en la web completa, no en esta vista previa.
+La foto es demasiado grande. Prueba con otra.`,
   fr: `Phrase du jour
 Salut, je suis Munggli, ton copain pour apprendre le coréen.
 Tous les sujets
@@ -2673,7 +2753,17 @@ Alors, je pourrais laisser mes bagages ?
 Décris tes symptômes en détail (depuis quand, à quel point), mentionne une allergie et renseigne-toi sur les effets secondaires.
 Qu'est-ce qui vous amène ? Depuis quand avez-vous ces symptômes ?
 J'ai de la fièvre et mal à la gorge depuis hier.
-Je suis allergique à la pénicilline.`,
+Je suis allergique à la pénicilline.
+Apprendre avec une photo
+Photographie un menu, un panneau ou un produit. Munggli le lit avec toi et te montre quoi dire.
+Ajouter une photo
+Ce qui est écrit
+À dire ici
+S'entraîner avec un jeu de rôle
+Aide-moi à lire ceci et à l'utiliser.
+Impossible d'ouvrir cette photo. Essaie un JPG ou un PNG.
+La lecture de photos fonctionne sur le site complet, pas dans cet aperçu.
+Cette photo est trop grande. Essaie-en une autre.`,
   de: `Satz des Tages
 Hallo, ich bin Munggli, dein Koreanisch-Kumpel.
 Alle Themen
@@ -2970,7 +3060,17 @@ Könnte ich dann mein Gepäck hierlassen?
 Beschreibe deine Symptome genau (seit wann, wie stark), erwähne eine Allergie und frag nach Nebenwirkungen.
 Was führt Sie zu uns? Seit wann haben Sie Beschwerden?
 Ich habe seit gestern Fieber und Halsschmerzen.
-Ich bin allergisch gegen Penicillin.`,
+Ich bin allergisch gegen Penicillin.
+Mit einem Foto lernen
+Fotografiere eine Speisekarte, ein Schild oder ein Produkt. Munggli liest es mit dir und zeigt dir, was du sagen kannst.
+Foto hinzufügen
+Was dort steht
+Das kannst du hier sagen
+Als Rollenspiel üben
+Hilf mir, das zu lesen und zu benutzen.
+Das Foto ließ sich nicht öffnen. Versuch ein JPG oder PNG.
+Fotos lesen funktioniert auf der vollständigen Website, nicht in dieser Vorschau.
+Das Foto ist zu groß. Versuch ein anderes.`,
   pt: `Frase do dia
 Oi, eu sou o Munggli, seu parceiro de coreano.
 Todos os temas
@@ -3267,7 +3367,17 @@ Então, posso deixar minha bagagem?
 Descreva seus sintomas em detalhe (desde quando, quão forte), mencione uma alergia e pergunte sobre efeitos colaterais.
 O que traz você aqui? Desde quando tem os sintomas?
 Estou com febre e dor de garganta desde ontem.
-Sou alérgico(a) a penicilina.`,
+Sou alérgico(a) a penicilina.
+Aprenda com uma foto
+Fotografe um cardápio, uma placa ou um produto. O Munggli lê com você e mostra o que dizer.
+Adicionar foto
+O que está escrito
+Diga isto aqui
+Praticar isto como role-play
+Me ajude a ler isto e a usar.
+Não foi possível abrir essa foto. Tente JPG ou PNG.
+A leitura de fotos funciona no site completo, não nesta prévia.
+A foto é grande demais. Tente outra.`,
   ru: `Фраза дня
 Привет, я Мунгли, твой приятель по корейскому.
 Все темы
@@ -3564,7 +3674,17 @@ Olive Young
 Подробно опиши симптомы (с какого времени, насколько сильно), упомяни аллергию и спроси о побочных эффектах.
 Что вас привело? Как давно у вас симптомы?
 Со вчерашнего дня у меня температура и болит горло.
-У меня аллергия на пенициллин.`,
+У меня аллергия на пенициллин.
+Учись по фото
+Сфотографируй меню, вывеску или товар. Мунгли прочитает его вместе с тобой и подскажет, что сказать.
+Добавить фото
+Что здесь написано
+Что сказать здесь
+Потренироваться в ролевой игре
+Помоги прочитать это и использовать.
+Не удалось открыть фото. Попробуй JPG или PNG.
+Чтение фото работает на полной версии сайта, а не в этом превью.
+Фото слишком большое. Попробуй другое.`,
 };
 const out = {};
 for (const l in L) { const v = L[l].split("\n"); out[l] = {}; K.forEach((k, i) => { if (v[i]) out[l][k] = v[i]; }); }

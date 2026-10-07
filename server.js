@@ -54,8 +54,15 @@ const { buildPrompt } = sandbox.MALHAE;
 // -------------------------------------------------------------
 // AI 호출 (Anthropic / OpenAI / Google Gemini)
 // -------------------------------------------------------------
-async function callLLM({ system, messages, maxTokens }) {
-  if (PROVIDER === "gemini") return callGemini({ system, messages, maxTokens });
+// image: optional { mime, data(base64) } — attached to the last user message (photo reading)
+async function callLLM({ system, messages, maxTokens, image }) {
+  if (PROVIDER === "gemini") return callGemini({ system, messages, maxTokens, image });
+  if (image) {
+    const last = messages[messages.length - 1];
+    last.content = PROVIDER === "openai"
+      ? [{ type: "text", text: last.content }, { type: "image_url", image_url: { url: `data:${image.mime};base64,${image.data}` } }]
+      : [{ type: "image", source: { type: "base64", media_type: image.mime, data: image.data } }, { type: "text", text: last.content }];
+  }
 
   if (PROVIDER === "openai") {
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -111,7 +118,7 @@ class GeminiError extends Error {
   }
 }
 
-async function geminiOnce(model, { system, messages, maxTokens }) {
+async function geminiOnce(model, { system, messages, maxTokens, image }) {
   const thinkingConfig = model.startsWith("gemini-2.5")
     ? { thinkingBudget: 0 }
     : { thinkingLevel: /lite|3\.6/.test(model) ? "minimal" : "low" };
@@ -120,7 +127,10 @@ async function geminiOnce(model, { system, messages, maxTokens }) {
     headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: system }] },
-      contents: messages.map((m) => ({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] })),
+      contents: messages.map((m, i) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: image && i === messages.length - 1 ? [{ inlineData: { mimeType: image.mime, data: image.data } }, { text: m.content }] : [{ text: m.content }],
+      })),
       // output limit includes thinking tokens on Gemini 3, so leave headroom
       generationConfig: { maxOutputTokens: maxTokens + 1024, responseMimeType: "application/json", thinkingConfig },
     }),
@@ -239,12 +249,12 @@ function sendJSON(res, status, data) {
   res.end(JSON.stringify(data));
 }
 
-function readBody(req) {
+function readBody(req, limit = 100_000) {
   return new Promise((resolve, reject) => {
     let raw = "";
     req.on("data", (c) => {
       raw += c;
-      if (raw.length > 100_000) { reject(new Error("too large")); req.destroy(); }
+      if (raw.length > limit) { reject(new Error("too large")); req.destroy(); }
     });
     req.on("end", () => { try { resolve(raw ? JSON.parse(raw) : {}); } catch (e) { reject(e); } });
     req.on("error", reject);
@@ -315,14 +325,22 @@ const server = http.createServer(async (req, res) => {
     if (rateLimited(clientIp(req))) return sendJSON(res, 429, { error: "Too many requests. Wait a minute and try again." });
 
     let body;
-    try { body = await readBody(req); } catch { return sendJSON(res, 400, { error: "Bad request." }); }
-    const { kind, lang, level, simId, messages } = body || {};
-    const prompt = buildPrompt({ kind, lang, level, simId });
+    // a photo (resized on the phone, ~200-400 KB) makes the request bigger than a text chat
+    try { body = await readBody(req, 3_000_000); } catch { return sendJSON(res, 400, { error: "That photo is too big. Try another one." }); }
+    const { kind, lang, level, simId, scene, messages } = body || {};
+    const prompt = buildPrompt({ kind, lang, level, simId, scene });
     if (!prompt || !Array.isArray(messages)) return sendJSON(res, 400, { error: "Bad request." });
+    let image = null;
+    if (kind === "photo") {
+      const img = body.image || {};
+      if (!/^image\/(jpeg|png|webp)$/.test(img.mime) || typeof img.data !== "string" || img.data.length > 2_800_000 || !/^[A-Za-z0-9+/=]+$/.test(img.data))
+        return sendJSON(res, 400, { error: "That photo is too big. Try another one." });
+      image = { mime: img.mime, data: img.data };
+    }
 
     if (overDailyLimit()) return sendJSON(res, 429, { error: "Munggle is very busy today. Please come back tomorrow!" });
     try {
-      const text = await callLLM({ system: prompt.system, messages: cleanMessages(messages), maxTokens: prompt.maxTokens });
+      const text = await callLLM({ system: prompt.system, messages: cleanMessages(messages), maxTokens: prompt.maxTokens, image });
       return sendJSON(res, 200, { text });
     } catch (err) {
       console.error(err);
