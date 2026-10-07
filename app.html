@@ -820,7 +820,8 @@ $("#prefLang").onchange = e => { prefs.lang = e.target.value; savePrefs(); };
 $("#prefLevel").oninput = e => { prefs.level = LEVEL_KEYS[+e.target.value] || "zero"; savePrefs(); };
 $$("#levelTicks span").forEach((s, j) => s.onclick = () => { prefs.level = LEVEL_KEYS[j]; savePrefs(); });
 $$("#voiceSeg button").forEach(b => b.onclick = () => { prefs.voice = b.dataset.voice; pickVoice(); savePrefs(); speakKo("안녕하세요!"); });
-function openSheet() { renderPrefs(); $("#sheet").hidden = false; $("#prefLang").focus(); }
+// Focus the close button, not the language list: focusing a <select> pops its list open on phones
+function openSheet() { renderPrefs(); $("#sheet").hidden = false; $("#sheetClose").focus({ preventScroll: true }); }
 function closeSheet() { $("#sheet").hidden = true; $("#setBtn").focus(); }
 $("#setBtn").onclick = openSheet;
 $("#sheetClose").onclick = closeSheet;
