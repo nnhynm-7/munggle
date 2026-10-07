@@ -333,7 +333,10 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
 .sim-bar .title { display: flex; align-items: center; gap: 12px; padding: 14px 0 10px; min-width: 0; }
 .sim-bar .title div { min-width: 0; }
 .sim-bar .title b { font-size: 1.25rem; font-weight: 800; display: block; line-height: 1.25; letter-spacing: -.02em; }
-.sim-bar small { color: var(--muted); display: block; font-size: .78rem; }
+.sim-bar small { color: var(--muted); display: block; font-size: .82rem; }
+.goal-box { display: flex; flex-direction: column; gap: 4px; margin: 0 0 12px; padding: 12px 14px; border-radius: 16px; background: var(--pink); }
+.goal-box .lab { color: var(--pink-ink); }
+.goal-box #simGoalText { font-size: 1rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
 .sim-bar .actions { display: flex; gap: 6px; flex-wrap: wrap; }
 .staff .k { font-size: 1.3rem; font-weight: 800; line-height: 1.35; }
 .staff .r { color: var(--pink-ink); font-size: .8rem; }
@@ -642,6 +645,7 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
         <div class="sim-bar">
           <button class="back" id="simBack"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-i18n="All situations">All situations</span></button>
           <div class="title"><span class="badge" id="simBadge"></span><div><b id="simTitle"></b><small id="simGoal"></small></div></div>
+          <div class="goal-box"><span class="lab" data-i18n="Goal">Goal</span><span id="simGoalText"></span></div>
           <div class="actions">
             <button class="mini" id="hintToggle" aria-pressed="false" data-i18n="Hints off">Hints off</button>
             <button class="mini" id="autoToggle" aria-pressed="false" title="Start listening automatically after Munggli speaks" data-i18n="Hands-free off">Hands-free off</button>
@@ -1655,7 +1659,8 @@ function startSim(s) {
   if (s.id === "photo") $("#simBadge").innerHTML = ICON.camera; else $("#simBadge").textContent = s.line;
   $("#simBadge").style.background = `var(--p${s.line})`; $("#simBadge").style.color = `var(--t${s.line})`;
   $("#simTitle").textContent = tr(s.en);
-  $("#simGoal").textContent = `${s.ko} · ${tr("Goal:")} ${tr(s.goal)}`;
+  $("#simGoal").textContent = s.ko;
+  $("#simGoalText").textContent = tr(s.goal);
   $("#simPick").hidden = true; $("#simReport").hidden = true; $("#simRun").hidden = false;
   syncComposer();
   window.scrollTo(0, 0);
