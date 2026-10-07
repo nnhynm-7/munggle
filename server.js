@@ -220,7 +220,8 @@ function overTtsBudget(n) {
   return false;
 }
 const xmlEsc = (s) => s.replace(/[<>&"']/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&apos;" })[c]);
-const TTS_RATES = { zero: "-12%", some: "-6%", conv: "0%", slow: "-30%" };
+// Natural speed for normal playback (slowed AI voices sound stretched and robotic); only the "Slow" button slows down
+const TTS_RATES = { zero: "0%", some: "0%", conv: "0%", slow: "-22%" };
 
 const daily = { day: "", count: 0 };
 function overDailyLimit() {

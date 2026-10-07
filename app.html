@@ -1005,7 +1005,7 @@ async function speakKo(text, { slow = false, onend } = {}) {
   if (!("speechSynthesis" in window)) { onend && onend(); return; }
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "ko-KR";
-  u.rate = slow ? 0.75 : Math.max(0.9, LEVELS[prefs.level].rate);
+  u.rate = slow ? 0.8 : 1;   // natural speed; only "Slow" slows down
   u.pitch = 1.05;
   if (koVoice) u.voice = koVoice;
   if (onend) u.onend = onend;
