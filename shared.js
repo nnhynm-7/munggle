@@ -36,7 +36,7 @@ const LEVELS = {
 // Each situation borrows a Seoul subway line color (badge number = line).
 // staff: 대화 화면에서 멍글이가 맡는 역할 이름
 const SIMS = [
-  { id: "bbq", line: 1, ko: "고깃집", en: "Korean BBQ", staff: "Server", goal: "Get a table, order 2 portions of samgyeopsal, ask for less spicy side dishes and pay.",
+  { id: "bbq", line: 1, ko: "식당", en: "Restaurant", staff: "Server", goal: "Get a table, order 2 portions of samgyeopsal, ask for less spicy side dishes and pay.",
     role: "a busy but kind server at a samgyeopsal (pork belly BBQ) restaurant in Mapo, Seoul", place: "Korean BBQ restaurant",
     open: { ko: "어서 오세요! 몇 분이세요?", rom: "Eoseo oseyo! Myeot buniseyo?", meaning: "Welcome! How many people?" },
     sug: [{ ko: "두 명이요.", rom: "Du myeong-iyo.", meaning: "Two people." }, { ko: "혼자예요.", rom: "Honjayeyo.", meaning: "Just me." }] },

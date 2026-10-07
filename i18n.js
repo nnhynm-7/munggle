@@ -177,7 +177,7 @@ How do I make small talk with a taxi driver?
 Check my Korean
 Correct my Korean: 저는 한국 음식을 너무 좋아해요
 Quiz me with a real-life situation
-Korean BBQ
+Restaurant
 Server
 Convenience store
 Clerk
@@ -485,7 +485,7 @@ AIの返事に時間がかかりすぎました。もう一度試してくださ
 韓国語チェック
 私の韓国語を直して：저는 한국 음식을 너무 좋아해요
 実際の場面でクイズを出して
-韓国焼肉
+レストラン
 店員
 コンビニ
 店員
@@ -792,7 +792,7 @@ AI 回复太慢了。请再试一次。
 帮我检查韩语
 帮我改改这句韩语：저는 한국 음식을 너무 좋아해요
 用真实场景考考我
-韩国烤肉
+餐厅
 服务员
 便利店
 店员
@@ -1099,7 +1099,7 @@ AI 回覆太慢了。請再試一次。
 幫我檢查韓語
 幫我改改這句韓語：저는 한국 음식을 너무 좋아해요
 用真實情境考考我
-韓式烤肉
+餐廳
 服務生
 便利商店
 店員
@@ -1406,7 +1406,7 @@ Nói chuyện phiếm với tài xế taxi thế nào?
 Kiểm tra tiếng Hàn
 Sửa câu tiếng Hàn của tôi: 저는 한국 음식을 너무 좋아해요
 Đố tôi bằng một tình huống thực tế
-Thịt nướng Hàn Quốc
+Nhà hàng
 Nhân viên phục vụ
 Cửa hàng tiện lợi
 Nhân viên thu ngân
@@ -1713,7 +1713,7 @@ AI ใช้เวลานานเกินไป ลองอีกครั�
 ตรวจภาษาเกาหลี
 แก้ภาษาเกาหลีให้หน่อย: 저는 한국 음식을 너무 좋아해요
 ทดสอบด้วยสถานการณ์จริง
-หมูย่างเกาหลี
+ร้านอาหาร
 พนักงานเสิร์ฟ
 ร้านสะดวกซื้อ
 พนักงานแคชเชียร์
@@ -2020,7 +2020,7 @@ Bagaimana berbasa-basi dengan sopir taksi?
 Cek bahasa Koreaku
 Koreksi bahasa Koreaku: 저는 한국 음식을 너무 좋아해요
 Uji aku dengan situasi nyata
-BBQ Korea
+Restoran
 Pelayan
 Minimarket
 Kasir
@@ -2327,7 +2327,7 @@ Charla casual
 Revisa mi coreano
 Corrige mi coreano: 저는 한국 음식을 너무 좋아해요
 Ponme a prueba con una situación real
-Barbacoa coreana
+Restaurante
 Mesero
 Tienda de conveniencia
 Cajero
@@ -2634,7 +2634,7 @@ Comment discuter avec un chauffeur de taxi ?
 Vérifie mon coréen
 Corrige mon coréen : 저는 한국 음식을 너무 좋아해요
 Fais-moi un quiz avec une vraie situation
-Barbecue coréen
+Restaurant
 Serveur
 Supérette
 Caissier
@@ -2941,7 +2941,7 @@ Wie mache ich Smalltalk mit einem Taxifahrer?
 Prüf mein Koreanisch
 Korrigiere mein Koreanisch: 저는 한국 음식을 너무 좋아해요
 Frag mich mit einer echten Situation ab
-Koreanisches BBQ
+Restaurant
 Kellner
 Convenience Store
 Kassierer
@@ -3248,7 +3248,7 @@ Como puxar conversa com um taxista?
 Revise meu coreano
 Corrija meu coreano: 저는 한국 음식을 너무 좋아해요
 Faça um quiz com uma situação real
-Churrasco coreano
+Restaurante
 Garçom
 Loja de conveniência
 Caixa
@@ -3555,7 +3555,7 @@ A foto é grande demais. Tente outra.`,
 Проверь мой корейский
 Исправь мой корейский: 저는 한국 음식을 너무 좋아해요
 Проверь меня в реальной ситуации
-Корейское барбекю
+Ресторан
 Официант
 Магазин у дома
 Кассир

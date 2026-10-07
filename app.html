@@ -643,7 +643,7 @@ main { flex: 1; width: 100%; padding-bottom: calc(var(--composer-h, 0px) + var(-
           <button class="back" id="simBack"><svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-i18n="All situations">All situations</span></button>
           <div class="title"><span class="badge" id="simBadge"></span><div><b id="simTitle"></b><small id="simGoal"></small></div></div>
           <div class="actions">
-            <button class="mini" id="hintToggle" aria-pressed="true" data-i18n="Hints on">Hints on</button>
+            <button class="mini" id="hintToggle" aria-pressed="false" data-i18n="Hints off">Hints off</button>
             <button class="mini" id="autoToggle" aria-pressed="false" title="Start listening automatically after Munggli speaks" data-i18n="Hands-free off">Hands-free off</button>
             <button class="btn small" id="endSim" data-i18n="Finish &amp; get report">Finish &amp; get report</button>
           </div>
@@ -1593,7 +1593,8 @@ async function askSend(text) {
 /* =============================================================
    ② Situations (Munggli plays the staff)
    ============================================================= */
-const sim = { cur: null, turns: [], log: [], hints: true, auto: false, done: false };
+const sim = { cur: null, turns: [], log: [], hints: false, auto: false, done: false };   // hints start off; the learner can turn them on
+$("#panel-sim").classList.add("hide-hints"); $("#composer").classList.add("hide-hints");
 const lineColor = n => `var(--l${n})`;
 
 function renderSims() {
