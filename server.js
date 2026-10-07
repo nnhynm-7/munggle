@@ -32,7 +32,16 @@ const TTS_REGION = process.env.AZURE_SPEECH_REGION || "";
 const TTS_VOICE = process.env.AZURE_TTS_VOICE || "ko-KR-SunHiNeural";          // female (default)
 const TTS_VOICE_MALE = process.env.AZURE_TTS_VOICE_MALE || "ko-KR-InJoonNeural"; // male (chosen in Settings)
 const TTS_DAILY_CHARS = Number(process.env.TTS_DAILY_CHARS) || 15000;   // 무료 한도(월 50만 자)를 넘지 않게 하루 상한
-const HAS_TTS = !!(TTS_KEY && TTS_REGION);
+const HAS_AZURE = !!(TTS_KEY && TTS_REGION);
+
+// 가장 사람 같은 목소리 (선택): ElevenLabs. 있으면 이것부터 쓰고, 실패하면(무료 크레딧 소진 등) Azure → 브라우저 음성 순서.
+const EL_KEY = process.env.ELEVENLABS_API_KEY || "";
+const EL_VOICE = process.env.ELEVENLABS_VOICE_ID || "EXAVITQu4vr4xnSDxMaL";            // female (default)
+const EL_VOICE_MALE = process.env.ELEVENLABS_VOICE_ID_MALE || "nPczCjzI2devNBz1zQrb";  // male (chosen in Settings)
+const EL_MODEL = process.env.ELEVENLABS_MODEL || "eleven_multilingual_v2";            // 한국어 지원, 가장 자연스러움
+const EL_DAILY_CHARS = Number(process.env.ELEVENLABS_DAILY_CHARS) || 1000;           // 무료(월 약 1만 자)를 아껴 쓰기 위한 하루 상한
+const HAS_EL = !!EL_KEY;
+const HAS_TTS = HAS_EL || HAS_AZURE;
 
 // 요청 제한 (배포 시 비용 폭탄 방지)
 const PER_MINUTE = Number(process.env.RATE_PER_MINUTE) || 20;   // 사용자(IP)당 1분 요청 수
@@ -211,13 +220,51 @@ setInterval(() => {
     for (const [ip, list] of map) if (!list.some((t) => now - t < 60_000)) map.delete(ip);
 }, 60_000).unref();
 
-const ttsDaily = { day: "", chars: 0 };
-function overTtsBudget(n) {
+const ttsDaily = { day: "", chars: 0 }, elDaily = { day: "", chars: 0 };
+function overBudget(counter, limit, n) {
   const today = new Date().toISOString().slice(0, 10);
-  if (ttsDaily.day !== today) Object.assign(ttsDaily, { day: today, chars: 0 });
-  if (ttsDaily.chars + n > TTS_DAILY_CHARS) return true;
-  ttsDaily.chars += n;
+  if (counter.day !== today) Object.assign(counter, { day: today, chars: 0 });
+  if (counter.chars + n > limit) return true;
+  counter.chars += n;
   return false;
+}
+const overTtsBudget = (n) => overBudget(ttsDaily, TTS_DAILY_CHARS, n);
+
+// Same sentence, same voice → reuse the audio (the first lines of each situation and the daily phrase repeat a lot)
+const voiceCache = new Map();
+function cacheVoice(key, buf) {
+  voiceCache.set(key, buf);
+  if (voiceCache.size > 400) voiceCache.delete(voiceCache.keys().next().value);
+}
+
+async function elevenLabsVoice(text, male, slow) {
+  const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(male ? EL_VOICE_MALE : EL_VOICE)}?output_format=mp3_44100_64`, {
+    method: "POST",
+    headers: { "xi-api-key": EL_KEY, "Content-Type": "application/json", Accept: "audio/mpeg" },
+    body: JSON.stringify({
+      text, model_id: EL_MODEL, language_code: EL_MODEL.includes("multilingual_v2") ? undefined : "ko",
+      voice_settings: { stability: 0.45, similarity_boost: 0.8, style: 0.15, use_speaker_boost: true, speed: slow ? 0.8 : 1 },
+    }),
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!r.ok) throw new Error(`ElevenLabs ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  return Buffer.from(await r.arrayBuffer());
+}
+
+async function azureVoice(text, male, rate) {
+  const r = await fetch(`https://${encodeURIComponent(TTS_REGION)}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+    method: "POST",
+    headers: {
+      "Ocp-Apim-Subscription-Key": TTS_KEY,
+      "Content-Type": "application/ssml+xml",
+      "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
+      "User-Agent": "munggle",
+    },
+    body: `<speak version="1.0" xml:lang="ko-KR"><voice name="${xmlEsc(male ? TTS_VOICE_MALE : TTS_VOICE)}"><prosody rate="${rate}">${xmlEsc(text)}</prosody></voice></speak>`,
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!r.ok) throw new Error(`Azure TTS ${r.status}: ${await r.text()}`);
+  return Buffer.from(await r.arrayBuffer());
 }
 const xmlEsc = (s) => s.replace(/[<>&"']/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&apos;" })[c]);
 // Natural speed for normal playback (slowed AI voices sound stretched and robotic); only the "Slow" button slows down
@@ -295,30 +342,25 @@ const server = http.createServer(async (req, res) => {
     let body;
     try { body = await readBody(req); } catch { return sendJSON(res, 400, { error: "Bad request." }); }
     const text = typeof body?.text === "string" ? body.text.trim() : "";
+    const slow = body?.speed === "slow", male = body?.voice === "male";
     const rate = TTS_RATES[body?.speed] || TTS_RATES.some;
-    const voiceName = body?.voice === "male" ? TTS_VOICE_MALE : TTS_VOICE;
     if (!text || text.length > 200 || !/[가-힣]/.test(text)) return sendJSON(res, 400, { error: "Bad request." });
-    if (overTtsBudget(text.length)) return sendJSON(res, 429, { error: "Voice limit reached for today." });
-    try {
-      const r = await fetch(`https://${encodeURIComponent(TTS_REGION)}.tts.speech.microsoft.com/cognitiveservices/v1`, {
-        method: "POST",
-        headers: {
-          "Ocp-Apim-Subscription-Key": TTS_KEY,
-          "Content-Type": "application/ssml+xml",
-          "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
-          "User-Agent": "munggle",
-        },
-        body: `<speak version="1.0" xml:lang="ko-KR"><voice name="${xmlEsc(voiceName)}"><prosody rate="${rate}">${xmlEsc(text)}</prosody></voice></speak>`,
-        signal: AbortSignal.timeout(20_000),
-      });
-      if (!r.ok) throw new Error(`Azure TTS ${r.status}: ${await r.text()}`);
-      const audio = Buffer.from(await r.arrayBuffer());
-      res.writeHead(200, { ...BASE_HEADERS, "Content-Type": "audio/mpeg", "Cache-Control": "no-store" });
-      return res.end(audio);
-    } catch (err) {
-      console.error(err);
-      return sendJSON(res, 502, { error: "Voice failed." });
+    const send = (audio) => { res.writeHead(200, { ...BASE_HEADERS, "Content-Type": "audio/mpeg", "Cache-Control": "no-store" }); return res.end(audio); };
+
+    // 1) ElevenLabs (most natural)
+    const elKey = `el|${male}|${slow}|${text}`;
+    if (voiceCache.has(elKey)) return send(voiceCache.get(elKey));
+    if (HAS_EL && !overBudget(elDaily, EL_DAILY_CHARS, text.length)) {
+      try { const audio = await elevenLabsVoice(text, male, slow); cacheVoice(elKey, audio); return send(audio); }
+      catch (err) { console.error(err.message); }   // credits used up / bad voice id → try Azure
     }
+    // 2) Azure
+    const azKey = `az|${male}|${rate}|${text}`;
+    if (voiceCache.has(azKey)) return send(voiceCache.get(azKey));
+    if (!HAS_AZURE) return sendJSON(res, 503, { error: "Voice failed." });   // the page falls back to the browser voice
+    if (overTtsBudget(text.length)) return sendJSON(res, 429, { error: "Voice limit reached for today." });
+    try { const audio = await azureVoice(text, male, rate); cacheVoice(azKey, audio); return send(audio); }
+    catch (err) { console.error(err); return sendJSON(res, 502, { error: "Voice failed." }); }
   }
 
   if (url.pathname === "/api/llm" && req.method === "POST") {
@@ -356,5 +398,6 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`\n✅ Munggle 실행 중: http://localhost:${PORT}`);
   console.log(HAS_KEY ? `🤖 AI: ${PROVIDER} · 1분 ${PER_MINUTE}회/사용자 · 하루 ${DAILY_LIMIT}회` : "⚠️  API 키가 없어 체험(데모) 모드로 동작합니다.");
-  console.log(HAS_TTS ? `🔊 목소리: ${TTS_VOICE} (Azure)\n` : "🔈 목소리: 브라우저 기본 음성 (Edge로 열면 가장 자연스러워요)\n");
+  console.log(HAS_EL ? `🔊 목소리: ElevenLabs (${EL_MODEL})${HAS_AZURE ? " → 안 되면 Azure" : ""}\n`
+    : HAS_AZURE ? `🔊 목소리: ${TTS_VOICE} (Azure)\n` : "🔈 목소리: 브라우저 기본 음성 (Edge로 열면 가장 자연스러워요)\n");
 });
